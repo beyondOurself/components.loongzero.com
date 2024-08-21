@@ -2,7 +2,7 @@
 import { ref, watch, computed, watchEffect, onMounted, onUnmounted, getCurrentInstance, provide, shallowRef, toValue, toRaw, isProxy } from 'vue';
 
 import Schema from './utils/validator.js';
-import { deepCopy } from './utils/common.js';
+import { deepCopy, getTypeDefualtValue } from './utils/common.js';
 
 const instance = getCurrentInstance();
 defineOptions({
@@ -93,17 +93,26 @@ const validate = (call = () => {}) => {
 
 // E >>> 表单校验规则  <<<
 
-defineExpose({ validate });
+// ---> S 重置 <---
+
+const reset = () => {
+	const modelValue = toValue(props.model);
+	for (let [prop, value] of  Object.entries(modelValue) ) {
+		modelValue[prop] = getTypeDefualtValue(value);
+	}
+};
+
+// ---> E 重置 <---
+
+defineExpose({ validate, reset });
 </script>
 <template>
 	<view class="loong-form">
 		<!-- S 消息弹窗 -->
-		<loong-form-message ref="LOONG_FORM_MESSAGE_REF" type="error"></loong-form-message>
+		<loong-message ref="LOONG_FORM_MESSAGE_REF" type="error"></loong-message>
 		<!-- E 消息弹窗 -->
 		<form @submit="formSubmit" @reset="formReset" ref="loong_form_ref">
 			<slot></slot>
-			<button form-type="submit">Submit</button>
-			<button type="default" form-type="reset">Reset</button>
 		</form>
 	</view>
 </template>

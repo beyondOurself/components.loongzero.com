@@ -45,24 +45,20 @@ const labelStyler = computed(() => {
 	return styler;
 });
 const formMessage = inject('form__message');
-
+const isError = ref(false);
 watch(formMessage, (message = []) => {
 	console.log('message', message);
 	if (message && message.length) {
 		const findMessage = message.find((fi) => fi.field === props.prop);
-
 		console.log('findMessage', findMessage);
 		if (findMessage) {
+			isError.value = true;
 			const { message = '', field = '' } = findMessage;
 			if (message === `${field} is required`) {
 				errorMessage.value = `${props.label}不能为空`;
 			} else {
 				errorMessage.value = message;
 			}
-
-			uni.showToast({
-				title: errorMessage.value
-			});
 		} else {
 			errorMessage.value = '';
 		}
@@ -93,10 +89,14 @@ onMounted(() => {
 	}
 });
 // ---> E 名称映射 <---
+
+const mainClass = computed(() => {
+	return [{ 'form_item_main--error': isError.value }];
+});
 </script>
 <template>
 	<view class="loong-form-item">
-		<view class="form_item_main">
+		<view class="form_item_main" :class="mainClass">
 			<view class="form_item_label" :style="labelStyler">
 				<slot name="label" style="">
 					<text>{{ label }}</text>
@@ -117,6 +117,7 @@ $loong-form-label-color: #333333 !default;
 $loong-form-label-gap: 16rpx !default;
 $loong-form-font-size: 30rpx !default;
 $loong-form-item-height: 120rpx !default;
+$loong-form-item-color-error: #f56c6c !default;
 .loong-form-item {
 	.form_item_main {
 		height: $loong-form-item-height;
@@ -124,7 +125,10 @@ $loong-form-item-height: 120rpx !default;
 		align-items: center;
 		font-size: $loong-form-font-size;
 		box-sizing: border-box;
-		border-bottom: 2rpx solid #ececec;
+		border-bottom: 1rpx solid #ececec;
+	}
+	.form_item_main--error {
+		// border-bottom: 1rpx solid  $loong-form-item-color-error;
 	}
 
 	.form_item_label {
@@ -145,14 +149,14 @@ $loong-form-item-height: 120rpx !default;
 	}
 
 	.item_label_required {
-		color: #dd524d;
+		color: $loong-form-item-color-error;
 		font-weight: 700;
 	}
 	.item_content_error {
 		position: absolute;
 		bottom: 0;
-		color: #f56c6c;
-		font-size: 22rpx;
+		color: $loong-form-item-color-error;
+		font-size: 24rpx;
 	}
 }
 </style>

@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-21 10:57:45
  * @LastEditors: canlong.shen 
- * @LastEditTime: 2024-08-21 15:22:22
+ * @LastEditTime: 2024-08-21 16:10:05
  * @FilePath: /components.loongzero.com/uni_modules/loong-form-message/components/loong-form-message/loong-form-message.vue
 -->
 
@@ -18,6 +18,10 @@ const props = defineProps({
 		type: [String],
 		default: 'success',
 		validator: (v) => ['success', 'error', 'warning', 'info'].includes(v)
+	},
+	duration:{
+		type:[Number],
+		default:2000
 	}
 });
 
@@ -25,11 +29,10 @@ const props = defineProps({
 
 const isOpen = ref(false);
 let openTimeOutId = null;
-const message = ref('')
+const message = ref('');
 const open = (msg = '') => {
-	
-	console.log('msg','>>>',msg)
-	message.value = msg
+	console.log('msg', '>>>', msg);
+	message.value = msg;
 	isOpen.value = true;
 
 	if (openTimeOutId) {
@@ -37,7 +40,7 @@ const open = (msg = '') => {
 	}
 	openTimeOutId = setTimeout(() => {
 		isOpen.value = false;
-	}, 2000);
+	}, props.duration);
 	console.log('isOpen', '>>>', isOpen);
 };
 
@@ -50,6 +53,11 @@ const messageStyle = computed(() => {
 	return styler;
 });
 // ---> E 打开 <---
+// ---> S 关闭 <---
+const close = () => {
+	isOpen.value = false;
+};
+// ---> E 关闭 <---
 
 // ---> S 类型 <---
 const messageClass = computed(() => {
@@ -66,12 +74,12 @@ const messageClass = computed(() => {
 });
 // ---> E 类型 <---
 
-defineExpose({ open });
+defineExpose({ open ,close});
 </script>
 <template>
 	<view class="loong-form-message">
-		<view class="form_message" :class="messageClass" :style="messageStyle">
-			<text>{{message}}</text>
+		<view class="form_message" :class="messageClass" :style="messageStyle" @click="close">
+			<text>{{ message }}</text>
 		</view>
 	</view>
 </template>

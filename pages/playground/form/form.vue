@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-21 10:29:38
  * @LastEditors: canlong.shen 
- * @LastEditTime: 2024-08-21 10:48:59
+ * @LastEditTime: 2024-08-21 16:04:17
  * @FilePath: /components.loongzero.com/pages/playground/form/form.vue
 -->
 <script setup>
@@ -28,6 +28,10 @@ const validation = () => {
 		 console.log('values','>>>',values)
 	 })
  }
+ 
+ const reset = () => {
+ 	 FORM_REF.value.reset()
+  }
 
 
 </script>
@@ -60,13 +64,14 @@ const validation = () => {
 				<loong-input v-model="formModel.label02"></loong-input>
 			</loong-form-item>
 			<loong-form-item label="家庭住址">
-				<loong-input></loong-input>
+				<loong-input  v-model="formModel.label03"></loong-input>
 			</loong-form-item>
 		</loong-form>
 
 
      
-	 <button type="primary" @click="validation">测试</button>
+	 <button type="default" @click="validation">校验</button>
+	 <button type="default" @click="reset">重置</button>
 
 	</view>
 </template>

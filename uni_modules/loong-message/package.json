@@ -1,10 +1,10 @@
 {
-  "id": "loong-form-message",
-  "displayName": "loong-form-message",
+  "id": "loong-message",
+  "displayName": "loong-message",
   "version": "1.0.0",
-  "description": "loong-form-message",
+  "description": "loong-message",
   "keywords": [
-    "loong-form-message"
+    "loong-message"
 ],
   "repository": "",
   "engines": {
