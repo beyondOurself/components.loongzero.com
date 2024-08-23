@@ -47,10 +47,8 @@ const labelStyler = computed(() => {
 const formMessage = inject('form__message');
 const isError = ref(false);
 watch(formMessage, (message = []) => {
-	console.log('message', message);
 	if (message && message.length) {
 		const findMessage = message.find((fi) => fi.field === props.prop);
-		console.log('findMessage', findMessage);
 		if (findMessage) {
 			isError.value = true;
 			const { message = '', field = '' } = findMessage;
@@ -141,6 +139,9 @@ $loong-form-item-color-error: #f56c6c !default;
 		flex: 1;
 		height: $loong-form-item-height;
 		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
 	}
 
 	.loong-input,

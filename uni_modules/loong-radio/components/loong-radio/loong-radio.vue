@@ -1,0 +1,117 @@
+<!--
+ * @Description: 单选框
+ * @Author: canlong.shen 
+ * @Date: 2024-08-22 11:55:44
+ * @LastEditors: canlong.shen 
+ * @LastEditTime: 2024-08-23 10:49:16
+ * @FilePath: /components.loongzero.com/uni_modules/loong-radio/components/loong-radio/loong-radio.vue
+-->
+
+<script setup>
+import { ref, watch, computed, watchEffect, onMounted, onUnmounted, toValue } from 'vue';
+
+defineOptions({
+	name: 'LoongRadio'
+});
+
+const emits = defineEmits(['change']);
+
+// ---> S props 初始化 <---
+const props = defineProps({
+	options: {
+		type: [Array],
+		default: () => []
+	}
+});
+
+const modelValue = defineModel({ type: [ Number,String ]});
+// ---> E props 初始化 <---
+
+const groupOptions = ref(props.options);
+
+// ---> S 切换选择 <---
+const curActivedValue = ref('');
+const changeRadioGroup = (event = '') => {
+	const activedOption = toValue(groupOptions);
+	const { detail: { value = '' } = {} } = event || {};
+	curActivedValue.value = value;
+	modelValue.value = value;
+	const findOption = activedOption.find((fi) => `${fi.value}` === `${value}`);
+	emits('change', value, findOption);
+};
+// ---> E 切换选择 <---
+</script>
+<template>
+	<view class="loong-radio">
+		<radio-group @change="changeRadioGroup">
+			<view class="radio_container">
+				<template v-for="item in groupOptions">
+					<view class="radio_item">
+						<label
+							class="radio_item_main"
+							:class="[{ 'radio_item_main--actived': `${item.value}` === `${curActivedValue}`, 'radio_item_main--disabled': item.disabled }]"
+						>
+							<!-- S 组件主体 -->
+							<radio hidden class="radio_item_body" :value="item.value" :disabled="item.disabled || false" />
+							<!-- E 组件主体 -->
+						</label>
+						<view class="radio_item_text">
+							<slot name="label">
+								<text>{{ item.label }}</text>
+							</slot>
+						</view>
+					</view>
+				</template>
+			</view>
+		</radio-group>
+	</view>
+</template>
+<style lang="scss">
+$loong-radio-diameter: 28rpx !default;
+$loong-radio-border: 4rpx !default;
+$loong-radio-border-color: #e1e1e1 !default;
+$loong-radio-gap: 8rpx !default;
+$loong-radio-color: #fff !default;
+$loong-radio-color-actived: $uni-color-primary or #2979ff !default;
+$loong-radio-color-disabled: #e1e1e1 !default;
+
+.loong-radio {
+	.radio_container {
+		display: flex;
+	}
+
+	.radio_item {
+		display: flex;
+		align-items: center;
+		margin-left: 16rpx;
+	}
+
+	.radio_item_body {
+		opacity: 0;
+		scale: 0;
+	}
+
+	.radio_item_main {
+		display: inline-block;
+		width: $loong-radio-diameter;
+		height: $loong-radio-diameter;
+		background-color: $loong-radio-color;
+		padding: $loong-radio-gap;
+		border: $loong-radio-border solid $loong-radio-border-color;
+		border-radius: 50%;
+		background-clip: content-box;
+	}
+	.radio_item_main--actived {
+		background-color: $loong-radio-color-actived;
+		border: $loong-radio-border solid $loong-radio-color-actived;
+	}
+
+	.radio_item_main--disabled {
+		background-color: $loong-radio-color-disabled;
+		border: $loong-radio-border solid$loong-radio-color-disabled;
+	}
+	.radio_item_text {
+		margin-left: 8rpx;
+	}
+}
+</style>

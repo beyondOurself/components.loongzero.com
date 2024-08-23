@@ -11,7 +11,7 @@ defineOptions({
 const props = defineProps({
 	model: {
 		type: [Object],
-		default: null
+		default: () => ref({})
 	},
 	labelWidth: {
 		type: [Number],
@@ -97,7 +97,7 @@ const validate = (call = () => {}) => {
 
 const reset = () => {
 	const modelValue = toValue(props.model);
-	for (let [prop, value] of  Object.entries(modelValue) ) {
+	for (let [prop, value] of Object.entries(modelValue)) {
 		modelValue[prop] = getTypeDefualtValue(value);
 	}
 };
