@@ -6,7 +6,7 @@ defineOptions({
 });
 const props = defineProps({});
 
-const bindValue = ref("愚蠢的地球人");
+const bindValue = ref("");
 const bindValue2 = ref("愚蠢的地球人");
 
 const change = (value = "") => {
@@ -25,6 +25,7 @@ const change = (value = "") => {
     ></loong-textarea>
     <loong-textarea
       disabled
+	  isFormItem
       v-model="bindValue2"
       height="200"
       :maxlength="200"

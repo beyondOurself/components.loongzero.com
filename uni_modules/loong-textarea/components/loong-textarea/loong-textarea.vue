@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-26 15:00:49
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-08-26 17:14:22
+ * @LastEditTime: 2024-08-26 17:23:24
  * @FilePath: \components.loongzero.com\uni_modules\loong-textarea\components\loong-textarea\loong-textarea.vue
 -->
 
@@ -22,6 +22,10 @@ const props = defineProps({
     default: -1, // 无限制 -1
   },
   disabled: {
+    type: Boolean,
+    default: false,
+  },
+  isFormItem: {
     type: Boolean,
     default: false,
   },
@@ -45,7 +49,7 @@ const valueLengthGet = computed(() => {
 // ---> S placeholder <---
 
 const placeholderStyle = computed(() => {
-  return {};
+  return "color:CFCFCF; font-size:28rpx; ";
 });
 
 // ---> E placeholder <---
@@ -86,6 +90,15 @@ const textareaClass = computed(() => {
     },
   ];
 });
+const textareaWrapClass = computed(() => {
+  const { disabled = false, isFormItem = false } = props;
+  return [
+    {
+      "is--disabled": disabled,
+      "is--form-item": isFormItem,
+    },
+  ];
+});
 
 const autoHeightGet = computed(() => {
   const { height = "" } = props;
@@ -94,7 +107,7 @@ const autoHeightGet = computed(() => {
 // ---> E 样式控制 <---
 </script>
 <template>
-  <view class="loong-textarea" :class="textareaClass">
+  <view class="loong-textarea" :class="textareaWrapClass">
     <!-- S 主体 -->
     <textarea
       class="textarea_main"
@@ -129,6 +142,9 @@ const autoHeightGet = computed(() => {
   &.is--disabled {
     background-color: #f5f5f5;
     color: #d7d7d7;
+  }
+  &.is--form-item {
+    border: none;
   }
   .textarea_main {
     width: 100%;
