@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-26 15:00:49
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-08-26 17:23:24
+ * @LastEditTime: 2024-08-26 18:29:54
  * @FilePath: \components.loongzero.com\uni_modules\loong-textarea\components\loong-textarea\loong-textarea.vue
 -->
 
@@ -49,7 +49,7 @@ const valueLengthGet = computed(() => {
 // ---> S placeholder <---
 
 const placeholderStyle = computed(() => {
-  return "color:CFCFCF; font-size:28rpx; ";
+  return "color:CFCFCF; font-size:28rpx;";
 });
 
 // ---> E placeholder <---
@@ -134,14 +134,20 @@ const autoHeightGet = computed(() => {
   </view>
 </template>
 <style lang="scss">
+$loong-textarea-color-border: #dbdbdb !default;
+$loong-textarea-gap: 8rpx !default;
+$loong-textarea-count-color: #999 !default;
+$loong-textarea-disabled-color: #f5f5f5 !default;
+$loong-textarea-disabled-color-text: #d7d7d7 !default;
+
 .loong-textarea {
   position: relative;
   border-radius: 8rpx;
-  border: solid 1rpx #dbdbdb;
-  padding: 8rpx;
+  border: solid 1rpx $loong-textarea-color-border;
+  padding: $loong-textarea-gap;
   &.is--disabled {
-    background-color: #f5f5f5;
-    color: #d7d7d7;
+    background-color: $loong-textarea-disabled-color;
+    color: $loong-textarea-disabled-color-text;
   }
   &.is--form-item {
     border: none;
@@ -155,9 +161,9 @@ const autoHeightGet = computed(() => {
     position: absolute;
     bottom: 0;
     right: 0;
-    color: #999;
+    color: $loong-textarea-count-color;
     font-size: 24rpx;
-    margin-right: 8rpx;
+    margin-right: $loong-textarea-gap;
   }
 }
 </style>
