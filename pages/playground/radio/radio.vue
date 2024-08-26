@@ -8,7 +8,7 @@ defineOptions({
 const props = defineProps({});
 
 // ---> S 值绑定 <---
-const curValue = ref('');
+const curValue = ref(1);
 watch(curValue, (value) => {
 	console.log('curValue', '>>>', value);
 });
@@ -19,6 +19,15 @@ const options = ref([
 	{
 		label: '测试1',
 		value: 1,
+		disabled: true
+	},
+	{
+		label: '测试2',
+		value: 2,
+	},
+	{
+		label: '测试3',
+		value: 3
 	}
 ]);
 

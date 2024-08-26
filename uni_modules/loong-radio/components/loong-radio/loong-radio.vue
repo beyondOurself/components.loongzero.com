@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-22 11:55:44
  * @LastEditors: canlong.shen 
- * @LastEditTime: 2024-08-23 10:49:16
+ * @LastEditTime: 2024-08-26 14:52:51
  * @FilePath: /components.loongzero.com/uni_modules/loong-radio/components/loong-radio/loong-radio.vue
 -->
 
@@ -24,21 +24,24 @@ const props = defineProps({
 	}
 });
 
-const modelValue = defineModel({ type: [ Number,String ]});
-// ---> E props 初始化 <---
-
+const modelValue = defineModel({ type: [Number, String] });
 const groupOptions = ref(props.options);
 
+// ---> E props 初始化 <---
+
 // ---> S 切换选择 <---
-const curActivedValue = ref('');
 const changeRadioGroup = (event = '') => {
 	const activedOption = toValue(groupOptions);
 	const { detail: { value = '' } = {} } = event || {};
-	curActivedValue.value = value;
 	modelValue.value = value;
 	const findOption = activedOption.find((fi) => `${fi.value}` === `${value}`);
 	emits('change', value, findOption);
 };
+
+const isActived = (value = '') => {
+	return `${toValue(modelValue)}` === `${value}`;
+};
+
 // ---> E 切换选择 <---
 </script>
 <template>
@@ -49,13 +52,19 @@ const changeRadioGroup = (event = '') => {
 					<view class="radio_item">
 						<label
 							class="radio_item_main"
-							:class="[{ 'radio_item_main--actived': `${item.value}` === `${curActivedValue}`, 'radio_item_main--disabled': item.disabled }]"
+							:class="[
+								{
+									'is--actived': isActived(item.value),
+									'is--disabled': item.disabled,
+									'is--actived-disabled': item.disabled && isActived(item.value)
+								}
+							]"
 						>
 							<!-- S 组件主体 -->
 							<radio hidden class="radio_item_body" :value="item.value" :disabled="item.disabled || false" />
 							<!-- E 组件主体 -->
 						</label>
-						<view class="radio_item_text">
+						<view class="radio_item_text" :class="[{ 'is--disabled': item.disabled }]">
 							<slot name="label">
 								<text>{{ item.label }}</text>
 							</slot>
@@ -69,11 +78,11 @@ const changeRadioGroup = (event = '') => {
 <style lang="scss">
 $loong-radio-diameter: 28rpx !default;
 $loong-radio-border: 4rpx !default;
-$loong-radio-border-color: #e1e1e1 !default;
+$loong-radio-border-color: #c0c0c0 !default;
 $loong-radio-gap: 8rpx !default;
 $loong-radio-color: #fff !default;
 $loong-radio-color-actived: $uni-color-primary or #2979ff !default;
-$loong-radio-color-disabled: #e1e1e1 !default;
+$loong-radio-color-disabled: #ededed !default;
 
 .loong-radio {
 	.radio_container {
@@ -100,18 +109,27 @@ $loong-radio-color-disabled: #e1e1e1 !default;
 		border: $loong-radio-border solid $loong-radio-border-color;
 		border-radius: 50%;
 		background-clip: content-box;
+		&.is--actived {
+			background-color: $loong-radio-color-actived;
+			border: $loong-radio-border solid $loong-radio-color-actived;
+		}
+		
+		&.is--disabled {
+			background-color: $loong-radio-color;
+			border: $loong-radio-border solid $loong-radio-color-disabled;
+		}
+		&.is--actived-disabled {
+			background-color: $loong-radio-color-disabled;
+			border: $loong-radio-border solid $loong-radio-color-disabled;
+		}
 	}
-	.radio_item_main--actived {
-		background-color: $loong-radio-color-actived;
-		border: $loong-radio-border solid $loong-radio-color-actived;
-	}
-
-	.radio_item_main--disabled {
-		background-color: $loong-radio-color-disabled;
-		border: $loong-radio-border solid$loong-radio-color-disabled;
-	}
+	
 	.radio_item_text {
 		margin-left: 8rpx;
+		&.is--disabled {
+			color: $loong-radio-color-disabled;
+		}
 	}
+	
 }
 </style>
