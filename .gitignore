@@ -12,5 +12,6 @@ node_modules/
 unpackage/dist/build/
 unpackage/dist/dev/
 
+uni_modules/uni-*
 # python
 *.pyc
