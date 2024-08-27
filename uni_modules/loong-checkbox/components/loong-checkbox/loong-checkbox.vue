@@ -2,9 +2,9 @@
  * @Description: 复选框 
  * @Author: canlong.shen 
  * @Date: 2024-08-23 11:35:35
- * @LastEditors: canlong.shen 
- * @LastEditTime: 2024-08-26 14:51:07
- * @FilePath: /components.loongzero.com/uni_modules/loong-checkbox/components/loong-checkbox/loong-checkbox.vue
+ * @LastEditors: canlong.shen
+ * @LastEditTime: 2024-08-27 09:37:06
+ * @FilePath: \components.loongzero.com\uni_modules\loong-checkbox\components\loong-checkbox\loong-checkbox.vue
 -->
 
 <script setup>
@@ -97,7 +97,7 @@ const isActived = (value = '') => {
 								}
 							]"
 						>
-							<checkbox class="checkbox_boy" :value="item.value" :checked="isActived(item.value)" :disabled="item.disabled" />
+							<checkbox class="checkbox_body" :value="item.value" :checked="isActived(item.value)" :disabled="item.disabled" />
 							<view v-show="isActived(item.value)" class="checkbox_item_hook"></view>
 						</label>
 						<view v-if="item.label" class="checkbox_item_text" :class="[{ 'is--disabled': item.disabled }]">
@@ -117,7 +117,7 @@ $loong-checkbox-color: #fff !default;
 $loong-checkbox-color-disabled: #ededed !default;
 $loong-checkbox-border: 4rpx !default;
 $loong-checkbox-border-color: #c0c0c0 !default;
-$loong-checkbox-color-actived: $uni-color-primary or #2979ff !default;
+$loong-checkbox-color-actived: $uni-color-primary or #007aff !default;
 $loong-checkbox-radius: 8rpx !default;
 .loong-checkbox {
 	display: inline-block;
@@ -162,7 +162,7 @@ $loong-checkbox-radius: 8rpx !default;
 		top: 10%;
 		left: 32%;
 	}
-	.checkbox_boy {
+	.checkbox_body {
 		opacity: 0;
 		transform: scale(0);
 	}

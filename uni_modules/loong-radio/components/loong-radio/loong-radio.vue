@@ -2,9 +2,9 @@
  * @Description: 单选框
  * @Author: canlong.shen 
  * @Date: 2024-08-22 11:55:44
- * @LastEditors: canlong.shen 
- * @LastEditTime: 2024-08-26 14:52:51
- * @FilePath: /components.loongzero.com/uni_modules/loong-radio/components/loong-radio/loong-radio.vue
+ * @LastEditors: canlong.shen
+ * @LastEditTime: 2024-08-27 11:14:33
+ * @FilePath: \components.loongzero.com\uni_modules\loong-radio\components\loong-radio\loong-radio.vue
 -->
 
 <script setup>
@@ -81,7 +81,7 @@ $loong-radio-border: 4rpx !default;
 $loong-radio-border-color: #c0c0c0 !default;
 $loong-radio-gap: 8rpx !default;
 $loong-radio-color: #fff !default;
-$loong-radio-color-actived: $uni-color-primary or #2979ff !default;
+$loong-radio-color-actived: $uni-color-primary or #007aff !default;
 $loong-radio-color-disabled: #ededed !default;
 
 .loong-radio {
