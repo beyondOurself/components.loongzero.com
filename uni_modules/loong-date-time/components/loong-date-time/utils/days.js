@@ -11,8 +11,9 @@ export const getTimeStamp = (year = 0, month = 0, day = 0) => {
 export const getItemModel = (year = 0, month = 0, day = 0, extra = {}) => {
     const timeValue = getTimeStamp(year, month, day);
     const monthStr = month + 1 < 10 ? `0${month + 1}` : month + 1;
-    const formatValue = `${year}-${monthStr}-${day}`;
-    return { label: day, value: timeValue, disabled: false, isPre: true, formatValue, ...extra };
+    const dayStr = day < 10 ? `0${day}` : day
+    const formatValue = `${year}-${monthStr}-${dayStr}`;
+    return { label: day, value: timeValue, isPre: false, isCur: false, isNext: false, formatValue, ...extra };
 }
 
 export const getDays = (now = new Date()) => {
@@ -47,17 +48,17 @@ export const getDays = (now = new Date()) => {
 
     let preValue = preMonthDay
     for (let i = firstDay; i > 0; i--) {
-        dayList.unshift(getItemModel(preYear, preMonth, preValue));
+        dayList.unshift(getItemModel(preYear, preMonth, preValue, { isPre: true }));
         preValue--;
     }
 
     for (let i = 1; i <= days; i++) {
-        dayList.push(getItemModel(year, month, i));
+        dayList.push(getItemModel(year, month, i, { isCur: true }));
     }
 
     const diffNextDay = 42 - dayList.length
     for (let i = 1; i <= diffNextDay; i++) {
-        dayList.push(getItemModel(nextYear, nextMonth, i));
+        dayList.push(getItemModel(nextYear, nextMonth, i, { isNext: true }));
     }
 
 
@@ -72,7 +73,7 @@ export const isDate = (date) => {
 }
 
 
-export const getLayoutDays = (now = new Date()) => {
+export const getLayoutDays = (now = new Date(), setDisabledValueCall = () => false) => {
 
     if (!isDate(now)) {
         console.error('输入不是日期对象')
@@ -81,6 +82,11 @@ export const getLayoutDays = (now = new Date()) => {
 
 
     const dayList = getDays(now)
+
+    dayList.forEach((item, index) => {
+        item.disabled = setDisabledValueCall(item)
+    })
+
     const matrixDays = []
     let row = []
     dayList.forEach((fi = 0, index = 0) => {

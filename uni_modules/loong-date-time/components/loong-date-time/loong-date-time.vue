@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-30 17:53:33
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-02 15:31:28
+ * @LastEditTime: 2024-09-02 17:18:00
  * @FilePath: \components.loongzero.com\uni_modules\loong-date-time\components\loong-date-time\loong-date-time.vue
 -->
 
@@ -30,16 +30,21 @@ const props = defineProps({
   type: {
     type: [String],
     default: "date",
-    validator: (v) => ["date", "dateRange", "datetime", "dateTimeRange"].includes(v),
+    validator: (v) => ["date", "dateRange", "datetime", "datetimeRange"].includes(v),
+  },
+  setDisabledValueCall: {
+    type: [Function],
+    default: () => undefined,
   },
 });
 
 const matrixDays = shallowRef([]);
 
-onMounted(() => {
-  matrixDays.value = getLayoutDays();
+const initData = () => {
+  matrixDays.value = getLayoutDays(new Date(), props.setDisabledValueCall);
   console.log("onMounted matrixDays", matrixDays.value);
-});
+};
+initData();
 
 // ---> S 值绑定 <---
 
@@ -59,13 +64,13 @@ const confirm = () => {
     case "dateRange":
       startModelValue.value = formatDate(startValue);
       endModelValue.value = formatDate(endValue);
-      console.log("startModelValue.value",startModelValue.value);
-      console.log("endModelValue.value",endModelValue.value);
+      console.log("startModelValue.value", startModelValue.value);
+      console.log("endModelValue.value", endModelValue.value);
       break;
     case "datetime":
       modelValue.value = formatDate(startValue, "YYYY-MM-DD HH:mm:ss");
       break;
-    case "dateTimeRange":
+    case "datetimeRange":
       startModelValue.value = formatDate(startValue, "YYYY-MM-DD HH:mm:ss");
       endModelValue.value = formatDate(endValue, "YYYY-MM-DD HH:mm:ss");
       break;
@@ -79,6 +84,11 @@ const confirm = () => {
 // ---> S 日期选择 <---
 const activatedModelList = ref([]);
 const handleItem = (item = {}) => {
+  const { disabled = false, isCur = false, value = "" } = item;
+  if (disabled) {
+    return;
+  }
+
   const { type = "date" } = props;
   if (["date", "datetime"].includes(type)) {
     activatedModelList.value = [item];
@@ -94,10 +104,6 @@ const handleItem = (item = {}) => {
 };
 
 // ---> E 日期选择 <---
-
-// ---> S 日期单选 <---
-
-// ---> E 日期单选 <---
 
 // ---> S 周 <---
 const weekList = shallowRef(["日", "一", "二", "三", "四", "五", "六"]);
@@ -118,7 +124,7 @@ const isActivatedRange = (item = {}) => {
     activatedModelList
   );
   return (
-    ["dateRange", "dateTimeRange"].includes(type) &&
+    ["dateRange", "datetimeRange"].includes(type) &&
     value >= startValue &&
     value <= endValue
   );
@@ -136,7 +142,7 @@ const isActivatedRangeStartOrEnd = (item = {}, position = "start") => {
   } = activatedModelListValue;
 
   return (
-    ["dateRange", "dateTimeRange"].includes(type) &&
+    ["dateRange", "datetimeRange"].includes(type) &&
     ((position === "start" && value === startValue) ||
       (position === "end" && value === endValue))
   );
@@ -154,9 +160,41 @@ const isCurrent = (item = {}) => {
 
 // ---> E 样式 <---
 
+// ---> S 日期选择 <---
+
+const setActivatedYearMonth = (timestamp = 0) => {
+  if (!timestamp) {
+    return;
+  }
+  return formatDate(timestamp);
+};
+
+const selectedStartData = ref("");
+const selectedStartTime = ref("");
+const selectedEndData = ref("");
+const selectedEndTime = ref("");
+
+watchEffect(() => {
+  const {
+    0: { value: startValue, formatValue: startformatValue = "" } = {},
+    1: { value: endValue, formatValue: endformatValue = "" } = {},
+  } = toValue(activatedModelList);
+
+  selectedStartData.value = startformatValue;
+  selectedEndData.value = endformatValue;
+});
+
+// ---> E 日期选择 <---
+
+// ---> S 时间选择 <---
+
+const selectedTime = ref("");
+
+// ---> E 时间选择 <---
+
 const test = () => {
   //   days.value = getDays();
-  console.log("matrixDays", getLayoutDays());
+  console.log("matrixDays", getLayoutDays(new Date(), props.setDisabledValueCall));
 };
 </script>
 <template>
@@ -209,6 +247,7 @@ const test = () => {
                     class="days_item"
                     :class="{
                       'is--activated': isActivated(item),
+                      'is--disabled': item.disabled,
                     }"
                     @click="handleItem(item)"
                     >{{ item.label }}
@@ -225,9 +264,25 @@ const test = () => {
       </view>
       <!-- E 日期 -->
       <!-- S 日期选择 -->
-      <view class="datetime_selection">
-        <view class="selection_date">2024-08-30</view>
-        <view class="selection_time">13:30:00</view>
+      <view class="datetime_selection" v-if="type !== 'date'">
+        <view class="selection_date">
+          <input
+            class="selection_date_intput"
+            type="text"
+            disabled
+            :value="selectedStartData"
+            placeholder="选择日期"
+          />
+        </view>
+        <view class="selection_date">
+          <input
+            class="selection_date_intput"
+            type="text"
+            disabled
+            :value="selectedStartTime"
+            placeholder="选择时间"
+          />
+        </view>
       </view>
       <!-- E 日期选择 -->
       <!-- S 尾部 -->
@@ -276,6 +331,10 @@ $loong-datetime-header-color: #2f3237 !default;
     justify-content: space-around;
     border-top: solid 1rpx $loong-datetime-border-color;
     color: $loong-datetime-selection-color;
+  }
+
+  .selection_date_intput {
+    text-align: center;
   }
 
   .datetime_header {
@@ -377,6 +436,9 @@ $loong-datetime-header-color: #2f3237 !default;
     color: #000;
     font-weight: 600;
     position: relative;
+    &.is--disabled {
+      color: #cecece;
+    }
   }
   .days_item--current {
     position: absolute;
