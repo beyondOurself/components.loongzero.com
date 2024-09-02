@@ -15,10 +15,9 @@ export const getItemModel = (year = 0, month = 0, day = 0, extra = {}) => {
     return { label: day, value: timeValue, disabled: false, isPre: true, formatValue, ...extra };
 }
 
-export const getDays = () => {
+export const getDays = (now = new Date()) => {
 
     // 获取当前月的时间列表
-    const now = new Date();
     let year = now.getFullYear();
     const month = now.getMonth();
     const days = getLastDayOfMonth(year, month);
@@ -67,8 +66,21 @@ export const getDays = () => {
 }
 
 
-export const getLayoutDays = () => {
-    const dayList = getDays()
+// 判断是否是日期对象
+export const isDate = (date) => {
+    return Object.prototype.toString.call(date) === '[object Date]';
+}
+
+
+export const getLayoutDays = (now = new Date()) => {
+
+    if (!isDate(now)) {
+        console.error('输入不是日期对象')
+        return []
+    }
+
+
+    const dayList = getDays(now)
     const matrixDays = []
     let row = []
     dayList.forEach((fi = 0, index = 0) => {
@@ -80,5 +92,43 @@ export const getLayoutDays = () => {
         }
     })
     return matrixDays
+
+}
+
+
+export const formatDate = (date = '', format = 'YYYY-MM-DD') => {
+
+    if (!date) {
+        return ''
+    }
+
+
+    let dateObject = date
+
+    if (!isDate(date)) {
+        dateObject = new Date(date)
+    }
+
+    const year = dateObject.getFullYear()
+    const month = dateObject.getMonth() + 1
+    const day = dateObject.getDate()
+    const hours = dateObject.getHours()
+    const minutes = dateObject.getMinutes()
+    const seconds = dateObject.getSeconds()
+
+
+    const monthStr = month < 10 ? `0${month}` : month
+    const dayStr = day < 10 ? `0${day}` : day
+
+    const formatValue = format.replace('YYYY', year)
+        .replace('MM', monthStr)
+        .replace('DD', dayStr)
+        .replace('HH', hours)
+        .replace('mm', minutes)
+        .replace('ss', seconds)
+
+
+    return formatValue
+
 
 }
