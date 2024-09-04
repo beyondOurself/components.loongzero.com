@@ -1,0 +1,8 @@
+    {
+        "INPUT": "input",
+        "TEXT_AREA": "textarea",
+        "RADIO": "radio",
+        "CHECKBOX": "checkbox",
+        "SLIDER": "slider",
+        "SWITCH": "switch"
+    }
