@@ -14,10 +14,16 @@ const setDisabledValueCall = (item = {}) => {
   // return item.isNext
   return false;
 };
+
+const LOONG_DATE_TIME_REF = ref(null)
+const openDatePicker = () => {
+  LOONG_DATE_TIME_REF.value.open();
+};
 </script>
 <template>
   <view class="datetime-demo">
     <view class="datetime-demo">
+    <button @click="openDatePicker">打开时间面板</button>
       <!-- S 日期单选 -->
       <!-- {{ bindValue }}
       <loong-date-time
@@ -47,6 +53,7 @@ const setDisabledValueCall = (item = {}) => {
       {{ startDatetime }}
       {{ endDatetime }}
       <loong-date-time
+        ref="LOONG_DATE_TIME_REF"
         v-model:start="startDatetime"
         v-model:end="endDatetime"
         type="datetimeRange"

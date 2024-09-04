@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-30 17:53:33
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-04 11:33:11
+ * @LastEditTime: 2024-09-04 14:19:09
  * @FilePath: \components.loongzero.com\uni_modules\loong-date-time\components\loong-date-time\loong-date-time.vue
 -->
 
@@ -161,7 +161,50 @@ const isCurrent = (item = {}) => {
   return `${currentTime}` === `${item.value}`;
 };
 
+const popup = ref(false);
+const maskStyleGet = () => {
+  const styler = {};
+  if (popup.value) {
+    styler.opacity = 1;
+  } else {
+    styler.opacity = 0;
+  }
+
+  return styler;
+};
+
+const pickerStyleGet = computed(() => {
+  return {
+    transform: `translateY(${popup.value ? "0" : "100%"})`,
+  };
+});
+
+const isOpened  = ref(false)
+
+const open = () => {
+	isOpened.value = true;
+	nextTick(() => {
+		popup.value = true;
+	});
+};
+
+const close = () => {
+	popup.value = false;
+	setTimeout(() => {
+		isOpened.value = false;
+	}, 300);
+};
+
+
 // ---> E 样式 <---
+
+// ---> S 遮罩 <---
+
+const triggerMask = () => {
+	close();
+};
+
+// ---> E 遮罩 <---
 
 // ---> S 日期选择 <---
 
@@ -249,23 +292,21 @@ const triggerNextMonth = () => {
   changeYearMonth(nextYear, nextMonth);
 };
 
-const clearDatetimeData = () => {
-  selectedStartData.value = "";
-  selectedStartTime.value = "00:00:00";
-  selectedEndData.value = "";
-  selectedEndTime.value = "00:00:00";
-  activatedModelList.value = [];
-};
 // ---> E 年月选择 <---
+
+defineExpose({
+	open,
+	close
+});
 </script>
 <template>
-  <view class="loong-datetime-date-time">
+  <view class="loong-datetime-date-time" v-if="isOpened">
     <!-- S 遮罩 -->
-    <view class="datetime_mask"> </view>
+    <view class="datetime_mask" :style="maskStyleGet" @click="triggerMask"> </view>
     <!-- E 遮罩 -->
 
     <!-- S 内容 -->
-    <view class="datetime_main">
+    <view class="datetime_main" :style="pickerStyleGet">
       <!-- S 操作 -->
       <view class="datetime_header">
         <view class="header_prev" @click="triggerPrevMonth"></view>
@@ -275,7 +316,7 @@ const clearDatetimeData = () => {
         <view class="header_next" @click="triggerNextMonth"> </view>
         <!-- S 关闭按钮 -->
 
-        <view class="datetime_header_cancel">
+        <view class="datetime_header_cancel" @click="close">  
           <view class="datetime_header_cancel_right"></view>
           <view class="datetime_header_cancel_left"></view>
         </view>
@@ -414,6 +455,7 @@ $loong-datetime-header-color: #2f3237 !default;
   .datetime_mask {
     width: 100%;
     height: 100%;
+    transition: opacity 0.3s ease-in-out;
     background-color: $loong-datetime-mask-color;
   }
   .datetime_main {
@@ -422,6 +464,8 @@ $loong-datetime-header-color: #2f3237 !default;
     bottom: 0;
     background-color: #fff;
     border-radius: 16rpx 16rpx 0 0;
+    transform: translateY(100%); /* 初始位置在视图外 */
+    transition: all 0.3s ease-in-out; /* 添加过渡效果 */
   }
   .datetime_selection {
     height: 80rpx;

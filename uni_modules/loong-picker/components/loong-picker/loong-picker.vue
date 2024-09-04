@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-27 16:25:53
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-03 15:04:51
+ * @LastEditTime: 2024-09-04 14:05:15
  * @FilePath: \components.loongzero.com\uni_modules\loong-picker\components\loong-picker\loong-picker.vue
 -->
 
@@ -97,7 +97,6 @@ const confirm = () => {
 
 // ---> S 显隐 <---
 const isOpened = ref(false);
-
 const open = () => {
 	isOpened.value = true;
 	nextTick(() => {
@@ -189,7 +188,7 @@ defineExpose({
 </template>
 <style lang="scss">
 $loong-picker-color: $uni-color-primary or #007aff !default;
-$loong-mask-color: $uni-bg-color-mask or rgba(0, 0, 0, 0.4) !default;
+$loong-picker-mask-color: $uni-bg-color-mask or rgba(0, 0, 0, 0.4) !default;
 .loong-picker {
 	position: fixed;
 	top: 0;
@@ -202,7 +201,7 @@ $loong-mask-color: $uni-bg-color-mask or rgba(0, 0, 0, 0.4) !default;
 		width: 100%;
 		height: 100%;
 		transition: opacity 0.3s ease-in-out;
-		background-color: rgba(0, 0, 0, 0.4);
+		background-color: $loong-picker-mask-color;
 	}
 
 	.picker_main {
