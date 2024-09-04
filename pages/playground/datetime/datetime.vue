@@ -46,18 +46,18 @@ const openDatePicker = () => {
         v-model:end="end"
         type="dateRange"
         v-model="bindValue"
-        :setDisabledValueCall="setDisabledValueCall"
+        :disabled="setDisabledValueCall"
       ></loong-date-time> -->
       <!-- E 日期区间选择 -->
       <!-- S 日期时间区间选择 -->
-      {{ startDatetime }}
-      {{ endDatetime }}
+      <!-- {{ startDatetime }}
+      {{ endDatetime }} -->
       <loong-date-time
         ref="LOONG_DATE_TIME_REF"
         v-model:start="startDatetime"
         v-model:end="endDatetime"
         type="datetimeRange"
-        :setDisabledValueCall="setDisabledValueCall"
+        :disabled="setDisabledValueCall"
       ></loong-date-time>
       <!-- E 日期时间区间选择 -->
     </view>

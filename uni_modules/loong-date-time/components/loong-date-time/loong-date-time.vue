@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-30 17:53:33
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-04 14:19:09
+ * @LastEditTime: 2024-09-04 15:17:18
  * @FilePath: \components.loongzero.com\uni_modules\loong-date-time\components\loong-date-time\loong-date-time.vue
 -->
 
@@ -35,16 +35,20 @@ const props = defineProps({
     default: "date",
     validator: (v) => ["date", "dateRange", "datetime", "datetimeRange"].includes(v),
   },
-  setDisabledValueCall: {
+  disabled: {
     type: [Function],
     default: () => undefined,
+  },
+  placeholder: {
+    type: [String],
+    default: "请选择日期",
   },
 });
 
 const matrixDays = shallowRef([]);
 
 const initData = () => {
-  matrixDays.value = getLayoutDays(new Date(), props.setDisabledValueCall);
+  matrixDays.value = getLayoutDays(new Date(), props.disabled);
 };
 initData();
 
@@ -66,22 +70,40 @@ const confirm = () => {
 
   switch (props.type) {
     case "date":
+      if(!selectedStartDataValue){
+        return
+      }
       modelValue.value = selectedStartDataValue;
       break;
     case "dateRange":
+    if(!selectedStartDataValue || !selectedEndDataValue){
+        return
+      }
       startModelValue.value = selectedStartDataValue;
       endModelValue.value = selectedEndDataValue;
+      modelValue.value = `${selectedStartDataValue}~${selectedEndDataValue}`;
+
       break;
     case "datetime":
+    if(!selectedStartDataValue || !selectedStartTimeValue){
+        return
+      }
       modelValue.value = `${selectedStartDataValue} ${selectedStartTimeValue}`;
       break;
     case "datetimeRange":
+    if(!selectedStartDataValue || !selectedStartTimeValue || !selectedEndDataValue || !selectedEndTimeValue){
+        return
+      }
       startModelValue.value = `${selectedStartDataValue} ${selectedStartTimeValue}`;
       endModelValue.value = `${selectedEndDataValue} ${selectedEndTimeValue}`;
+      modelValue.value = `${selectedStartDataValue} ${selectedStartTimeValue}~${selectedEndDataValue} ${selectedEndTimeValue}`;
+
       break;
     default:
       break;
   }
+
+  close();
 };
 
 // ---> E 值绑定 <---
@@ -179,29 +201,28 @@ const pickerStyleGet = computed(() => {
   };
 });
 
-const isOpened  = ref(false)
+const isOpened = ref(false);
 
 const open = () => {
-	isOpened.value = true;
-	nextTick(() => {
-		popup.value = true;
-	});
+  isOpened.value = true;
+  nextTick(() => {
+    popup.value = true;
+  });
 };
 
 const close = () => {
-	popup.value = false;
-	setTimeout(() => {
-		isOpened.value = false;
-	}, 300);
+  popup.value = false;
+  setTimeout(() => {
+    isOpened.value = false;
+  }, 300);
 };
-
 
 // ---> E 样式 <---
 
 // ---> S 遮罩 <---
 
 const triggerMask = () => {
-	close();
+  close();
 };
 
 // ---> E 遮罩 <---
@@ -249,13 +270,8 @@ const openYearMonth = () => {
 };
 const changeYearMonth = (year = 0, month = 0) => {
   nextTick(() => {
-    matrixDays.value = getLayoutDays(
-      new Date(year, +month - 1),
-      props.setDisabledValueCall
-    );
+    matrixDays.value = getLayoutDays(new Date(year, +month - 1), props.disabled);
   });
-
-  // clearDatetimeData();
 };
 
 const triggerPrevMonth = () => {
@@ -294,134 +310,159 @@ const triggerNextMonth = () => {
 
 // ---> E 年月选择 <---
 
+// ---> S 输入框选择 <---
+
+
+
+const inputValueGet = computed(() => {
+  return modelValue.value || "";
+});
+
+// ---> E 输入框选择 <---
+
 defineExpose({
-	open,
-	close
+  open,
+  close,
 });
 </script>
 <template>
-  <view class="loong-datetime-date-time" v-if="isOpened">
-    <!-- S 遮罩 -->
-    <view class="datetime_mask" :style="maskStyleGet" @click="triggerMask"> </view>
-    <!-- E 遮罩 -->
-
-    <!-- S 内容 -->
-    <view class="datetime_main" :style="pickerStyleGet">
-      <!-- S 操作 -->
-      <view class="datetime_header">
-        <view class="header_prev" @click="triggerPrevMonth"></view>
-        <view class="header_month" @click="openYearMonth">
-          {{ selectedYearData }}年{{ selectedMonthData }}月
-        </view>
-        <view class="header_next" @click="triggerNextMonth"> </view>
-        <!-- S 关闭按钮 -->
-
-        <view class="datetime_header_cancel" @click="close">  
-          <view class="datetime_header_cancel_right"></view>
-          <view class="datetime_header_cancel_left"></view>
-        </view>
-
-        <!-- E 关闭按钮 -->
-      </view>
-      <!-- E 操作 -->
-      <!-- S 日期 -->
-      <view class="datetime_days">
-        <!-- S 星期 -->
-        <view class="datetime_days_week">
-          <template v-for="(item, key) in weekList" :key="key">
-            <view class="week_item">{{ item }}</view>
-          </template>
-        </view>
-        <!-- E 星期 -->
-        <!-- S 日期 -->
-
-        <view class="datetime_days_content">
-          <template v-for="(row, rowKey) in matrixDays" :key="rowKey">
-            <view class="days_row">
-              <template v-for="(item, itemKey) in row" :key="itemKey">
-                <view
-                  class="days_item_wrap"
-                  :class="{
-                    'is--range': isActivatedRange(item),
-                    'is--range-start': isActivatedRangeStartOrEnd(item, 'start'),
-                    'is--range-end': isActivatedRangeStartOrEnd(item, 'end'),
-                  }"
-                >
-                  <view
-                    class="days_item"
-                    :class="{
-                      'is--activated': isActivated(item),
-                      'is--disabled': item.disabled,
-                    }"
-                    @click="handleItem(item)"
-                    >{{ item.label }}
-
-                    <view class="days_item--current" v-if="isCurrent(item)"></view>
-                  </view>
-                </view>
-              </template>
-            </view>
-          </template>
-        </view>
-
-        <!-- E 日期 -->
-      </view>
-      <!-- E 日期 -->
-      <!-- S 日期选择 -->
-      <view class="datetime_selection">
+  <view class="loong-datetime">
+    <!-- S 输入框 -->
+    <view class="datetime_input">
+      <slot :data="{ modelValue }">
         <input
-          class="selection_date_intput"
-          type="text"
+          class="datetime_input_body"
           disabled
-          :value="selectedStartData"
-          placeholder="选择日期"
+          :value="inputValueGet"
+          :placeholder="placeholder"
+          @click="open"
         />
-
-        <input
-          v-if="['datetime', 'datetimeRange', 'dateRange'].includes(type)"
-          class="selection_date_intput"
-          type="text"
-          disabled
-          placeholder="选择时间"
-          :value="selectedStartTime"
-          @click="changeTime('start')"
-        />
-        <text v-if="['datetimeRange', 'dateRange'].includes(type)"> 至 </text>
-        <input
-          v-if="['datetimeRange', 'dateRange'].includes(type)"
-          class="selection_date_intput"
-          :class="{
-            selection_date_end_intput:
-              ['datetimeRange'].includes(type) && selectedEndData,
-          }"
-          type="text"
-          disabled
-          :value="selectedEndData"
-          placeholder="选择日期"
-        />
-        <input
-          v-if="['datetimeRange'].includes(type)"
-          class="selection_date_intput"
-          type="text"
-          disabled
-          placeholder="选择时间"
-          :value="selectedEndTime"
-          @click="changeTime('end')"
-        />
-      </view>
-      <!-- E 日期选择 -->
-      <!-- S 尾部 -->
-      <view class="datetime_footer">
-        <slot name="footer">
-          <view class="footer_operation">
-            <button class="footer_operation_confirm" @click="confirm">确定</button>
-          </view>
-        </slot>
-      </view>
-
-      <!-- E 尾部 -->
+      </slot>
     </view>
-    <!-- E 内容 -->
+    <!-- E 输入框 -->
+    <view class="datetime_wrap" v-if="isOpened">
+      <!-- S 遮罩 -->
+      <view class="datetime_mask" :style="maskStyleGet" @click="triggerMask"> </view>
+      <!-- E 遮罩 -->
+
+      <!-- S 内容 -->
+      <view class="datetime_main" :style="pickerStyleGet">
+        <!-- S 操作 -->
+        <view class="datetime_header">
+          <view class="header_prev" @click="triggerPrevMonth"></view>
+          <view class="header_month" @click="openYearMonth">
+            {{ selectedYearData }}年{{ selectedMonthData }}月
+          </view>
+          <view class="header_next" @click="triggerNextMonth"> </view>
+          <!-- S 关闭按钮 -->
+
+          <view class="datetime_header_cancel" @click="close">
+            <view class="datetime_header_cancel_right"></view>
+            <view class="datetime_header_cancel_left"></view>
+          </view>
+
+          <!-- E 关闭按钮 -->
+        </view>
+        <!-- E 操作 -->
+        <!-- S 日期 -->
+        <view class="datetime_days">
+          <!-- S 星期 -->
+          <view class="datetime_days_week">
+            <template v-for="(item, key) in weekList" :key="key">
+              <view class="week_item">{{ item }}</view>
+            </template>
+          </view>
+          <!-- E 星期 -->
+          <!-- S 日期 -->
+
+          <view class="datetime_days_content">
+            <template v-for="(row, rowKey) in matrixDays" :key="rowKey">
+              <view class="days_row">
+                <template v-for="(item, itemKey) in row" :key="itemKey">
+                  <view
+                    class="days_item_wrap"
+                    :class="{
+                      'is--range': isActivatedRange(item),
+                      'is--range-start': isActivatedRangeStartOrEnd(item, 'start'),
+                      'is--range-end': isActivatedRangeStartOrEnd(item, 'end'),
+                    }"
+                  >
+                    <view
+                      class="days_item"
+                      :class="{
+                        'is--activated': isActivated(item),
+                        'is--disabled': item.disabled,
+                      }"
+                      @click="handleItem(item)"
+                      >{{ item.label }}
+
+                      <view class="days_item--current" v-if="isCurrent(item)"></view>
+                    </view>
+                  </view>
+                </template>
+              </view>
+            </template>
+          </view>
+
+          <!-- E 日期 -->
+        </view>
+        <!-- E 日期 -->
+        <!-- S 日期选择 -->
+        <view class="datetime_selection">
+          <input
+            class="selection_date_intput"
+            type="text"
+            disabled
+            :value="selectedStartData"
+            placeholder="选择日期"
+          />
+
+          <input
+            v-if="['datetime', 'datetimeRange', 'dateRange'].includes(type)"
+            class="selection_date_intput"
+            type="text"
+            disabled
+            placeholder="选择时间"
+            :value="selectedStartTime"
+            @click="changeTime('start')"
+          />
+          <text v-if="['datetimeRange', 'dateRange'].includes(type)"> 至 </text>
+          <input
+            v-if="['datetimeRange', 'dateRange'].includes(type)"
+            class="selection_date_intput"
+            :class="{
+              selection_date_end_intput:
+                ['datetimeRange'].includes(type) && selectedEndData,
+            }"
+            type="text"
+            disabled
+            :value="selectedEndData"
+            placeholder="选择日期"
+          />
+          <input
+            v-if="['datetimeRange'].includes(type)"
+            class="selection_date_intput"
+            type="text"
+            disabled
+            placeholder="选择时间"
+            :value="selectedEndTime"
+            @click="changeTime('end')"
+          />
+        </view>
+        <!-- E 日期选择 -->
+        <!-- S 尾部 -->
+        <view class="datetime_footer">
+          <slot name="footer">
+            <view class="footer_operation">
+              <button class="footer_operation_confirm" @click="confirm">确定</button>
+            </view>
+          </slot>
+        </view>
+
+        <!-- E 尾部 -->
+      </view>
+      <!-- E 内容 -->
+    </view>
 
     <!-- S 时间选择器 -->
     <loong-time-selector
@@ -445,12 +486,14 @@ $loong-datetime-mask-color: $uni-bg-color-mask or rgba(0, 0, 0, 0.4) !default;
 $loong-datetime-border-color: #f0eded !default;
 $loong-datetime-selection-color: #2f3237 !default;
 $loong-datetime-header-color: #2f3237 !default;
-.loong-datetime-date-time {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+.loong-datetime {
+  .datetime_wrap {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
 
   .datetime_mask {
     width: 100%;
