@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-30 17:53:33
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-02 17:18:00
+ * @LastEditTime: 2024-09-04 11:33:11
  * @FilePath: \components.loongzero.com\uni_modules\loong-date-time\components\loong-date-time\loong-date-time.vue
 -->
 
@@ -17,9 +17,12 @@ import {
   onUnmounted,
   toValue,
   shallowRef,
+  nextTick,
 } from "vue";
 
-import { getDays, getLayoutDays, formatDate } from "./utils/days.js";
+import { getDays, getLayoutDays, formatDate, getCurrentYearMonth } from "./utils/days.js";
+import LoongTimeSelector from "./loong-time-selector.vue";
+import LoongYearMonthSelector from "./loong-year-month-selector.vue";
 defineOptions({
   name: "LoongDateTime",
 });
@@ -42,7 +45,6 @@ const matrixDays = shallowRef([]);
 
 const initData = () => {
   matrixDays.value = getLayoutDays(new Date(), props.setDisabledValueCall);
-  console.log("onMounted matrixDays", matrixDays.value);
 };
 initData();
 
@@ -57,22 +59,25 @@ const confirm = () => {
     activatedModelList
   );
 
+  const selectedStartDataValue = toValue(selectedStartData);
+  const selectedStartTimeValue = toValue(selectedStartTime);
+  const selectedEndDataValue = toValue(selectedEndData);
+  const selectedEndTimeValue = toValue(selectedEndTime);
+
   switch (props.type) {
     case "date":
-      modelValue.value = formatDate(startValue);
+      modelValue.value = selectedStartDataValue;
       break;
     case "dateRange":
-      startModelValue.value = formatDate(startValue);
-      endModelValue.value = formatDate(endValue);
-      console.log("startModelValue.value", startModelValue.value);
-      console.log("endModelValue.value", endModelValue.value);
+      startModelValue.value = selectedStartDataValue;
+      endModelValue.value = selectedEndDataValue;
       break;
     case "datetime":
-      modelValue.value = formatDate(startValue, "YYYY-MM-DD HH:mm:ss");
+      modelValue.value = `${selectedStartDataValue} ${selectedStartTimeValue}`;
       break;
     case "datetimeRange":
-      startModelValue.value = formatDate(startValue, "YYYY-MM-DD HH:mm:ss");
-      endModelValue.value = formatDate(endValue, "YYYY-MM-DD HH:mm:ss");
+      startModelValue.value = `${selectedStartDataValue} ${selectedStartTimeValue}`;
+      endModelValue.value = `${selectedEndDataValue} ${selectedEndTimeValue}`;
       break;
     default:
       break;
@@ -99,8 +104,6 @@ const handleItem = (item = {}) => {
       activatedModelList.value.push(item);
     }
   }
-  console.log("item", item);
-  console.log("activatedModelList", activatedModelList.value);
 };
 
 // ---> E 日期选择 <---
@@ -162,17 +165,10 @@ const isCurrent = (item = {}) => {
 
 // ---> S 日期选择 <---
 
-const setActivatedYearMonth = (timestamp = 0) => {
-  if (!timestamp) {
-    return;
-  }
-  return formatDate(timestamp);
-};
-
 const selectedStartData = ref("");
-const selectedStartTime = ref("");
+const selectedStartTime = ref("00:00:00");
 const selectedEndData = ref("");
-const selectedEndTime = ref("");
+const selectedEndTime = ref("00:00:00");
 
 watchEffect(() => {
   const {
@@ -188,14 +184,79 @@ watchEffect(() => {
 
 // ---> S 时间选择 <---
 
-const selectedTime = ref("");
+const LOONG_TIME_SELECTOR_REF = ref(null);
+
+const changeTime = (position = "start") => {
+  if (position === "start") {
+    LOONG_TIME_SELECTOR_REF.value.open(selectedStartTime);
+  } else if (position === "end") {
+    LOONG_TIME_SELECTOR_REF.value.open(selectedEndTime);
+  }
+};
 
 // ---> E 时间选择 <---
 
-const test = () => {
-  //   days.value = getDays();
-  console.log("matrixDays", getLayoutDays(new Date(), props.setDisabledValueCall));
+// ---> S 年月选择 <---
+const { year: currentYear, month: currentMonth } = getCurrentYearMonth();
+const selectedYearData = ref(currentYear);
+const selectedMonthData = ref(currentMonth);
+const LOONG_YEAR_MONTH_SELECTOR_REF = ref(null);
+const openYearMonth = () => {
+  LOONG_YEAR_MONTH_SELECTOR_REF.value.open();
 };
+const changeYearMonth = (year = 0, month = 0) => {
+  nextTick(() => {
+    matrixDays.value = getLayoutDays(
+      new Date(year, +month - 1),
+      props.setDisabledValueCall
+    );
+  });
+
+  // clearDatetimeData();
+};
+
+const triggerPrevMonth = () => {
+  const selectedYearDataValue = toValue(selectedYearData);
+  const selectedMonthDataValue = toValue(selectedMonthData);
+  let prevMonth = +selectedMonthDataValue - 1;
+  let pervYear = +selectedYearDataValue;
+  if (prevMonth === 0) {
+    prevMonth = 12;
+    pervYear = selectedYearDataValue - 1;
+    if (pervYear < 1900) {
+      pervYear = 1900;
+    }
+  }
+  selectedMonthData.value = prevMonth;
+  selectedYearData.value = pervYear;
+  changeYearMonth(pervYear, prevMonth);
+};
+const triggerNextMonth = () => {
+  const selectedYearDataValue = toValue(selectedYearData);
+  const selectedMonthDataValue = toValue(selectedMonthData);
+  let nextMonth = +selectedMonthDataValue + 1;
+  let nextYear = +selectedYearDataValue;
+  if (nextMonth === 13) {
+    nextMonth = 1;
+    nextYear = selectedYearDataValue + 1;
+    const maxYear = new Date().getFullYear() + 100;
+    if (nextYear > maxYear) {
+      nextYear = maxYear;
+    }
+  }
+  selectedMonthData.value = nextMonth;
+  selectedYearData.value = nextYear;
+  changeYearMonth(nextYear, nextMonth);
+};
+
+const clearDatetimeData = () => {
+  selectedStartData.value = "";
+  selectedStartTime.value = "00:00:00";
+  selectedEndData.value = "";
+  selectedEndTime.value = "00:00:00";
+  activatedModelList.value = [];
+};
+// ---> E 年月选择 <---
 </script>
 <template>
   <view class="loong-datetime-date-time">
@@ -207,9 +268,11 @@ const test = () => {
     <view class="datetime_main">
       <!-- S 操作 -->
       <view class="datetime_header">
-        <view class="header_left"></view>
-        <view class="header_month" @click="test"><text> 2021年10月 </text></view>
-        <view class="header_right"> </view>
+        <view class="header_prev" @click="triggerPrevMonth"></view>
+        <view class="header_month" @click="openYearMonth">
+          {{ selectedYearData }}年{{ selectedMonthData }}月
+        </view>
+        <view class="header_next" @click="triggerNextMonth"> </view>
         <!-- S 关闭按钮 -->
 
         <view class="datetime_header_cancel">
@@ -264,25 +327,46 @@ const test = () => {
       </view>
       <!-- E 日期 -->
       <!-- S 日期选择 -->
-      <view class="datetime_selection" v-if="type !== 'date'">
-        <view class="selection_date">
-          <input
-            class="selection_date_intput"
-            type="text"
-            disabled
-            :value="selectedStartData"
-            placeholder="选择日期"
-          />
-        </view>
-        <view class="selection_date">
-          <input
-            class="selection_date_intput"
-            type="text"
-            disabled
-            :value="selectedStartTime"
-            placeholder="选择时间"
-          />
-        </view>
+      <view class="datetime_selection">
+        <input
+          class="selection_date_intput"
+          type="text"
+          disabled
+          :value="selectedStartData"
+          placeholder="选择日期"
+        />
+
+        <input
+          v-if="['datetime', 'datetimeRange', 'dateRange'].includes(type)"
+          class="selection_date_intput"
+          type="text"
+          disabled
+          placeholder="选择时间"
+          :value="selectedStartTime"
+          @click="changeTime('start')"
+        />
+        <text v-if="['datetimeRange', 'dateRange'].includes(type)"> 至 </text>
+        <input
+          v-if="['datetimeRange', 'dateRange'].includes(type)"
+          class="selection_date_intput"
+          :class="{
+            selection_date_end_intput:
+              ['datetimeRange'].includes(type) && selectedEndData,
+          }"
+          type="text"
+          disabled
+          :value="selectedEndData"
+          placeholder="选择日期"
+        />
+        <input
+          v-if="['datetimeRange'].includes(type)"
+          class="selection_date_intput"
+          type="text"
+          disabled
+          placeholder="选择时间"
+          :value="selectedEndTime"
+          @click="changeTime('end')"
+        />
       </view>
       <!-- E 日期选择 -->
       <!-- S 尾部 -->
@@ -297,6 +381,21 @@ const test = () => {
       <!-- E 尾部 -->
     </view>
     <!-- E 内容 -->
+
+    <!-- S 时间选择器 -->
+    <loong-time-selector
+      v-if="['datetime', 'datetimeRange'].includes(type)"
+      ref="LOONG_TIME_SELECTOR_REF"
+    ></loong-time-selector>
+    <!-- E 时间选择器 -->
+    <!-- S 年月选择器 -->
+    <LoongYearMonthSelector
+      ref="LOONG_YEAR_MONTH_SELECTOR_REF"
+      v-model:year="selectedYearData"
+      v-model:month="selectedMonthData"
+      @change="changeYearMonth"
+    ></LoongYearMonthSelector>
+    <!-- E 年月选择器 -->
   </view>
 </template>
 <style lang="scss">
@@ -335,6 +434,10 @@ $loong-datetime-header-color: #2f3237 !default;
 
   .selection_date_intput {
     text-align: center;
+    font-size: 28rpx;
+  }
+  .selection_date_end_intput {
+    text-align: right;
   }
 
   .datetime_header {
@@ -344,19 +447,19 @@ $loong-datetime-header-color: #2f3237 !default;
     justify-content: center;
   }
 
-  .header_left,
-  .header_right {
+  .header_prev,
+  .header_next {
     padding: 12rpx;
     border: solid 4rpx $loong-datetime-header-color;
     border-top-left-radius: 4rpx;
     transform: rotate(-45deg);
     background-clip: content-box;
   }
-  .header_left {
+  .header_prev {
     border-right: none;
     border-bottom: none;
   }
-  .header_right {
+  .header_next {
     border-left: none;
     border-top: none;
     border-top-right-radius: 4rpx;
@@ -472,6 +575,8 @@ $loong-datetime-header-color: #2f3237 !default;
     display: inline-block;
     color: #fff;
     background-color: $loong-datetime-primay;
+    font-size: 28rpx;
+
     &.is--disabled {
       background-color: #ccc;
     }

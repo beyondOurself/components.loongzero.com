@@ -23,7 +23,6 @@ export const getDays = (now = new Date()) => {
     const month = now.getMonth();
     const days = getLastDayOfMonth(year, month);
     let preYear = year;
-    console.log('month', month);
     let preMonth = month - 1;
 
     if (preMonth < 0) {
@@ -102,6 +101,14 @@ export const getLayoutDays = (now = new Date(), setDisabledValueCall = () => fal
 }
 
 
+export const getCurrentYearMonth = (now = new Date()) => {
+    const year = now.getFullYear()
+    const month = now.getMonth() + 1
+    return { year, month }
+}
+
+
+
 export const formatDate = (date = '', format = 'YYYY-MM-DD') => {
 
     if (!date) {
@@ -137,4 +144,12 @@ export const formatDate = (date = '', format = 'YYYY-MM-DD') => {
     return formatValue
 
 
+}
+
+export const getYears = (start = 1900, end = new Date().getFullYear() + 100) => {
+    const years = []
+    for (let i = start; i <= end; i++) {
+        years.push(i)
+    }
+    return years
 }

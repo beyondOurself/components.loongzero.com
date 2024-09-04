@@ -7,6 +7,8 @@ const bindValue = ref("");
 const bindDateTimeValue = ref("");
 const start = ref("");
 const end = ref("");
+const startDatetime = ref("");
+const endDatetime = ref("");
 
 const setDisabledValueCall = (item = {}) => {
   // return item.isNext
@@ -24,13 +26,13 @@ const setDisabledValueCall = (item = {}) => {
       ></loong-date-time> -->
       <!-- E 日期单选 -->
       <!-- S 日期时间单选 -->
-      {{ bindDateTimeValue }}
+      <!-- {{ bindDateTimeValue }}
       <loong-date-time
         type="datetime"
         v-model="bindDateTimeValue"
-      ></loong-date-time>
+      ></loong-date-time> -->
       <!-- E 日期时间单选 -->
-
+      <!-- S 日期区间选择 -->
       <!-- {{ start }}
       {{ end }}
       <loong-date-time
@@ -40,6 +42,17 @@ const setDisabledValueCall = (item = {}) => {
         v-model="bindValue"
         :setDisabledValueCall="setDisabledValueCall"
       ></loong-date-time> -->
+      <!-- E 日期区间选择 -->
+      <!-- S 日期时间区间选择 -->
+      {{ startDatetime }}
+      {{ endDatetime }}
+      <loong-date-time
+        v-model:start="startDatetime"
+        v-model:end="endDatetime"
+        type="datetimeRange"
+        :setDisabledValueCall="setDisabledValueCall"
+      ></loong-date-time>
+      <!-- E 日期时间区间选择 -->
     </view>
   </view>
 </template>
