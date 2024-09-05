@@ -133,7 +133,9 @@ const autoHeightGet = computed(() => {
     <!-- E 字符数量提示 -->
   </view>
 </template>
-<style lang="scss">
+<style lang="scss" scoped>
+@import "~@/uni_modules/loong-scss/index.scss";
+
 $loong-textarea-color-border: #dbdbdb !default;
 $loong-textarea-gap: 8rpx !default;
 $loong-textarea-count-color: #999 !default;
@@ -145,6 +147,8 @@ $loong-textarea-disabled-color-text: #d7d7d7 !default;
   border-radius: 8rpx;
   border: solid 1rpx $loong-textarea-color-border;
   padding: $loong-textarea-gap;
+  @include base-component;
+
   &.is--disabled {
     background-color: $loong-textarea-disabled-color;
     color: $loong-textarea-disabled-color-text;
@@ -152,18 +156,19 @@ $loong-textarea-disabled-color-text: #d7d7d7 !default;
   &.is--form-item {
     border: none;
   }
-  .textarea_main {
-    width: 100%;
-    height: 120rpx;
-    min-height: 120rpx;
-  }
-  .textarea_count {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    color: $loong-textarea-count-color;
-    font-size: 24rpx;
-    margin-right: $loong-textarea-gap;
-  }
+}
+
+.textarea_main {
+  width: 100%;
+  height: 120rpx;
+  min-height: 120rpx;
+}
+.textarea_count {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  color: $loong-textarea-count-color;
+  font-size: 24rpx;
+  margin-right: $loong-textarea-gap;
 }
 </style>

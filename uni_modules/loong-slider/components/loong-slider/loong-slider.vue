@@ -8,7 +8,7 @@
 -->
 
 <script setup>
-import { ref, watch, computed, watchEffect, onMounted, onUnmounted,toValue } from "vue";
+import { ref, watch, computed, watchEffect, onMounted, onUnmounted, toValue } from "vue";
 
 defineOptions({
   name: "LoongSlider",
@@ -92,7 +92,10 @@ const showValue = computed(() => {
     />
   </view>
 </template>
-<style lang="scss">
+<style lang="scss" scoped>
+@import "~@/uni_modules/loong-scss/index.scss";
+
 .loong-slider {
+  @include base-component;
 }
 </style>

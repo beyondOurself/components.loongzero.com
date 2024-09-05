@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-26 19:00:25
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-08-27 16:08:40
+ * @LastEditTime: 2024-09-05 14:05:35
  * @FilePath: \components.loongzero.com\uni_modules\loong-switch\components\loong-switch\loong-switch.vue
 -->
 
@@ -119,56 +119,60 @@ watchEffect(() => {
     </label>
   </view>
 </template>
-<style lang="scss">
+<style lang="scss" scoped>
+@import "~@/uni_modules/loong-scss/index.scss";
+
 $loong-switch-background-color: #b7b9ba !default;
-$loong-switch-background-color-actived: $uni-color-primary or #007aff !default;
+$loong-switch-background-color-actived: $loong-primary !default;
 $loong-switch-gap: 2rpx !default;
 $loong-switch-width: 80rpx !default;
 $loong-switch-diameter: 46rpx !default;
 .loong-switch {
   display: inline-block;
-  .switch_main {
-    display: inline-flex;
-    align-items: center;
-    position: relative;
-  }
-  .switch_body {
-    width: 0;
-    height: 0;
-    position: absolute;
-  }
-  .switch_block {
-    border-radius: calc(($loong-switch-diameter + $loong-switch-gap) / 2);
-    padding: $loong-switch-gap;
-    background-color: $loong-switch-background-color;
-    transition: background-color 100ms ease;
-    &.is--activated {
-      background-color: $loong-switch-background-color-actived;
-    }
-    &.is--disabled {
-      opacity: 0.35;
-    }
-  }
-  .switch_block_sliding_wrap {
-    height: $loong-switch-diameter;
-    width: $loong-switch-width;
-    position: relative;
-  }
+  @include base-component;
+}
 
-  .switch_block_sliding {
-    position: absolute;
-    left: 0;
-    width: $loong-switch-diameter;
-    height: $loong-switch-diameter;
-    border-radius: 50%;
-    background-color: #fff;
-    transition: left 100ms ease-in-out;
-    &.is--activated {
-      left: calc(100% - $loong-switch-diameter);
-    }
+.switch_main {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+}
+.switch_body {
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+.switch_block {
+  border-radius: calc(($loong-switch-diameter + $loong-switch-gap) / 2);
+  padding: $loong-switch-gap;
+  background-color: $loong-switch-background-color;
+  transition: background-color 100ms ease;
+  &.is--activated {
+    background-color: $loong-switch-background-color-actived;
   }
-  .switch_label {
-    margin-left: 8rpx;
+  &.is--disabled {
+    opacity: 0.35;
   }
+}
+.switch_block_sliding_wrap {
+  height: $loong-switch-diameter;
+  width: $loong-switch-width;
+  position: relative;
+}
+
+.switch_block_sliding {
+  position: absolute;
+  left: 0;
+  width: $loong-switch-diameter;
+  height: $loong-switch-diameter;
+  border-radius: 50%;
+  background-color: #fff;
+  transition: left 100ms ease-in-out;
+  &.is--activated {
+    left: calc(100% - $loong-switch-diameter);
+  }
+}
+.switch_label {
+  margin-left: 8rpx;
 }
 </style>

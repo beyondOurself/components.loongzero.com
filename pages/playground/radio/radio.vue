@@ -2,7 +2,7 @@
 import { ref, watch, computed, watchEffect, onMounted, onUnmounted } from 'vue';
 
 defineOptions({
-	name: ''
+	name: 'RadioDemo'
 });
 
 const props = defineProps({});
@@ -34,7 +34,7 @@ const options = ref([
 // ---> E 选择项 <---
 </script>
 <template>
-	<view class="data-radio">
+	<view class="data-radio-demo">
 		<loong-radio v-model="curValue" :options="options"></loong-radio>
 	</view>
 </template>

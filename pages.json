@@ -67,6 +67,13 @@
 			{
 				"navigationBarTitleText" : ""
 			}
+		},
+		{
+			"path" : "pages/playground/message/message",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
 		}
 
 	],

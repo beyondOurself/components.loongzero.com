@@ -171,11 +171,12 @@ defineExpose({
     </view>
   </view>
 </template>
-<style lang="scss">
-$loong-time-primay: $uni-color-primary or #007aff !default;
-$loong-datetime-text-color: $uni-text-color or #333 !default;
-$loong-time-mask-color: $uni-bg-color-mask or rgba(0, 0, 0, 0.4) !default;
-$loong-time-header-color: #2f3237 !default;
+<style lang="scss" scoped>
+@import "~@/uni_modules/loong-scss/index.scss";
+
+$loong-time-primay: $loong-primary !default;
+$loong-time-mask-color: $loong-mask !default;
+$loong-time-header-color: $loong-main-color !default;
 
 .loong-year-month-selector {
   position: fixed;
@@ -184,83 +185,85 @@ $loong-time-header-color: #2f3237 !default;
   bottom: 0;
   left: 0;
   right: 0;
-
   background-color: $loong-time-mask-color;
-  .year_month_selector_main {
-    position: absolute;
-    width: 80%;
-    height: 60%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    background-color: #fff;
-    border-radius: 16rpx;
-  }
-  .year_month_selector_container {
-    flex: 1;
-  }
-  .year_month_selector_header {
-    position: relative;
-    height: 60rpx;
-  }
-  .year_month_selector_footer {
-    height: 80rpx;
-  }
-  .year_month_selector_picker {
-    height: 100%;
-  }
-  .tiem_picker_item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .tiem_picker_column_years {
-    border-top-left-radius: 16rpx;
-    border-bottom-left-radius: 16rpx;
-  }
-  .tiem_picker_column_second {
-    border-top-right-radius: 16rpx;
-    border-bottom-right-radius: 16rpx;
-  }
 
-  .year_month_selector_cancel {
-    position: absolute;
-    width: 35rpx;
-    height: 35rpx;
-    margin-right: 30rpx;
-    right: 0;
-    top: 30rpx;
-  }
-  .year_month_selector_cancel_right,
-  .year_month_selector_cancel_left {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 35rpx;
-    height: 4rpx;
-    border-radius: 4rpx;
-    background-color: $loong-time-header-color;
-  }
-  .year_month_selector_cancel_right {
-    transform: translate(-50%, -50%) rotate(45deg);
-  }
-  .year_month_selector_cancel_left {
-    transform: translate(-50%, -50%) rotate(-45deg);
-  }
+  @include base-component;
+}
 
-  .foote_confirm {
-    background-color: $loong-time-primay;
-    color: #fff;
-    height: 60rpx;
-    width: 500rpx;
-    line-height: 60rpx;
-    border-radius: 40rpx;
-    font-size: 28rpx;
-  }
+.year_month_selector_main {
+  position: absolute;
+  width: 80%;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-color: #fff;
+  border-radius: 16rpx;
+}
+.year_month_selector_container {
+  flex: 1;
+}
+.year_month_selector_header {
+  position: relative;
+  height: 60rpx;
+}
+.year_month_selector_footer {
+  height: 80rpx;
+}
+.year_month_selector_picker {
+  height: 100%;
+}
+.tiem_picker_item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tiem_picker_column_years {
+  border-top-left-radius: 16rpx;
+  border-bottom-left-radius: 16rpx;
+}
+.tiem_picker_column_second {
+  border-top-right-radius: 16rpx;
+  border-bottom-right-radius: 16rpx;
+}
+
+.year_month_selector_cancel {
+  position: absolute;
+  width: 35rpx;
+  height: 35rpx;
+  margin-right: 30rpx;
+  right: 0;
+  top: 30rpx;
+}
+.year_month_selector_cancel_right,
+.year_month_selector_cancel_left {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 35rpx;
+  height: 4rpx;
+  border-radius: 4rpx;
+  background-color: $loong-time-header-color;
+}
+.year_month_selector_cancel_right {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.year_month_selector_cancel_left {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.foote_confirm {
+  background-color: $loong-time-primay;
+  color: #fff;
+  height: 60rpx;
+  width: 500rpx;
+  line-height: 60rpx;
+  border-radius: 40rpx;
+  font-size: 28rpx;
 }
 </style>

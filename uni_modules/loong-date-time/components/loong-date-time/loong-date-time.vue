@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-30 17:53:33
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-04 15:17:18
+ * @LastEditTime: 2024-09-05 11:55:44
  * @FilePath: \components.loongzero.com\uni_modules\loong-date-time\components\loong-date-time\loong-date-time.vue
 -->
 
@@ -70,14 +70,14 @@ const confirm = () => {
 
   switch (props.type) {
     case "date":
-      if(!selectedStartDataValue){
-        return
+      if (!selectedStartDataValue) {
+        return;
       }
       modelValue.value = selectedStartDataValue;
       break;
     case "dateRange":
-    if(!selectedStartDataValue || !selectedEndDataValue){
-        return
+      if (!selectedStartDataValue || !selectedEndDataValue) {
+        return;
       }
       startModelValue.value = selectedStartDataValue;
       endModelValue.value = selectedEndDataValue;
@@ -85,14 +85,19 @@ const confirm = () => {
 
       break;
     case "datetime":
-    if(!selectedStartDataValue || !selectedStartTimeValue){
-        return
+      if (!selectedStartDataValue || !selectedStartTimeValue) {
+        return;
       }
       modelValue.value = `${selectedStartDataValue} ${selectedStartTimeValue}`;
       break;
     case "datetimeRange":
-    if(!selectedStartDataValue || !selectedStartTimeValue || !selectedEndDataValue || !selectedEndTimeValue){
-        return
+      if (
+        !selectedStartDataValue ||
+        !selectedStartTimeValue ||
+        !selectedEndDataValue ||
+        !selectedEndTimeValue
+      ) {
+        return;
       }
       startModelValue.value = `${selectedStartDataValue} ${selectedStartTimeValue}`;
       endModelValue.value = `${selectedEndDataValue} ${selectedEndTimeValue}`;
@@ -312,8 +317,6 @@ const triggerNextMonth = () => {
 
 // ---> S 输入框选择 <---
 
-
-
 const inputValueGet = computed(() => {
   return modelValue.value || "";
 });
@@ -480,199 +483,203 @@ defineExpose({
     <!-- E 年月选择器 -->
   </view>
 </template>
-<style lang="scss">
-$loong-datetime-primay: $uni-color-primary or #007aff !default;
-$loong-datetime-mask-color: $uni-bg-color-mask or rgba(0, 0, 0, 0.4) !default;
-$loong-datetime-border-color: #f0eded !default;
-$loong-datetime-selection-color: #2f3237 !default;
-$loong-datetime-header-color: #2f3237 !default;
+<style lang="scss" scoped>
+@import "~@/uni_modules/loong-scss/index.scss";
+
+$loong-datetime-primay: $loong-primary !default;
+$loong-datetime-mask-color: $loong-mask !default;
+$loong-datetime-border-color: $loong-border-1 !default;
+$loong-datetime-selection-color: $loong-main-color !default;
+$loong-datetime-header-color: $loong-main-color !default;
 .loong-datetime {
-  .datetime_wrap {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
+  @include base-component;
+}
 
-  .datetime_mask {
-    width: 100%;
-    height: 100%;
-    transition: opacity 0.3s ease-in-out;
-    background-color: $loong-datetime-mask-color;
-  }
-  .datetime_main {
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    background-color: #fff;
-    border-radius: 16rpx 16rpx 0 0;
-    transform: translateY(100%); /* 初始位置在视图外 */
-    transition: all 0.3s ease-in-out; /* 添加过渡效果 */
-  }
-  .datetime_selection {
-    height: 80rpx;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    border-top: solid 1rpx $loong-datetime-border-color;
-    color: $loong-datetime-selection-color;
-  }
+.datetime_wrap {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
 
-  .selection_date_intput {
-    text-align: center;
-    font-size: 28rpx;
-  }
-  .selection_date_end_intput {
-    text-align: right;
-  }
+.datetime_mask {
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.3s ease-in-out;
+  background-color: $loong-datetime-mask-color;
+}
+.datetime_main {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  background-color: #fff;
+  border-radius: 16rpx 16rpx 0 0;
+  transform: translateY(100%); /* 初始位置在视图外 */
+  transition: all 0.3s ease-in-out; /* 添加过渡效果 */
+}
+.datetime_selection {
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-top: solid 1rpx $loong-datetime-border-color;
+  color: $loong-datetime-selection-color;
+}
 
-  .datetime_header {
-    height: 110rpx;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.selection_date_intput {
+  text-align: center;
+  font-size: 28rpx;
+}
+.selection_date_end_intput {
+  text-align: right;
+}
 
-  .header_prev,
-  .header_next {
-    padding: 12rpx;
-    border: solid 4rpx $loong-datetime-header-color;
-    border-top-left-radius: 4rpx;
-    transform: rotate(-45deg);
-    background-clip: content-box;
-  }
-  .header_prev {
-    border-right: none;
-    border-bottom: none;
-  }
-  .header_next {
-    border-left: none;
-    border-top: none;
-    border-top-right-radius: 4rpx;
-  }
-  .header_month {
-    color: $loong-datetime-header-color;
-    font-size: 34rpx;
-    font-weight: bold;
-    margin: 0 30rpx;
-  }
+.datetime_header {
+  height: 110rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .datetime_header_cancel {
-    position: absolute;
-    width: 35rpx;
-    height: 35rpx;
-    margin-right: 30rpx;
-    right: 0;
-  }
-  .datetime_header_cancel_right,
-  .datetime_header_cancel_left {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 35rpx;
-    height: 4rpx;
-    border-radius: 4rpx;
-    background-color: $loong-datetime-header-color;
-  }
-  .datetime_header_cancel_right {
-    transform: translate(-50%, -50%) rotate(45deg);
-  }
-  .datetime_header_cancel_left {
-    transform: translate(-50%, -50%) rotate(-45deg);
-  }
+.header_prev,
+.header_next {
+  padding: 12rpx;
+  border: solid 4rpx $loong-datetime-header-color;
+  border-top-left-radius: 4rpx;
+  transform: rotate(-45deg);
+  background-clip: content-box;
+}
+.header_prev {
+  border-right: none;
+  border-bottom: none;
+}
+.header_next {
+  border-left: none;
+  border-top: none;
+  border-top-right-radius: 4rpx;
+}
+.header_month {
+  color: $loong-datetime-header-color;
+  font-size: 34rpx;
+  font-weight: bold;
+  margin: 0 30rpx;
+}
 
-  .datetime_days_week,
-  .days_row {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
+.datetime_header_cancel {
+  position: absolute;
+  width: 35rpx;
+  height: 35rpx;
+  margin-right: 30rpx;
+  right: 0;
+}
+.datetime_header_cancel_right,
+.datetime_header_cancel_left {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 35rpx;
+  height: 4rpx;
+  border-radius: 4rpx;
+  background-color: $loong-datetime-header-color;
+}
+.datetime_header_cancel_right {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.datetime_header_cancel_left {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
 
-  .datetime_days_week {
-    color: #b2b2b2;
-    border-bottom: solid 1rpx $loong-datetime-border-color;
-  }
-  .days_row {
-    margin-bottom: 4rpx;
-  }
+.datetime_days_week,
+.days_row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
 
-  .days_item,
-  .week_item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60rpx;
-    height: 60rpx;
-  }
-  .days_item_wrap {
-    padding: 8rpx;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    &.is--range {
-      background-color: rgba($loong-datetime-primay, 0.1);
-    }
-    &.is--range-start {
-      border-top-left-radius: 30rpx;
-      border-bottom-left-radius: 30rpx;
-    }
-    &.is--range-end {
-      border-top-right-radius: 30rpx;
-      border-bottom-right-radius: 30rpx;
-    }
-  }
-  .days_item {
-    color: #000;
-    font-weight: 600;
-    position: relative;
-    &.is--disabled {
-      color: #cecece;
-    }
-  }
-  .days_item--current {
-    position: absolute;
-    padding: 6rpx;
-    background-color: red;
-    border-radius: 50%;
-    top: 0;
-    right: 0;
-  }
-  .datetime_days {
-    margin: 0 16rpx;
-  }
-  .datetime_days_content {
-    margin: 30rpx 0;
-  }
-  .datetime_footer {
-    border-top: solid 1rpx $loong-datetime-border-color;
-  }
-  .footer_operation {
-    height: 80rpx;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.datetime_days_week {
+  color: #b2b2b2;
+  border-bottom: solid 1rpx $loong-datetime-border-color;
+}
+.days_row {
+  margin-bottom: 4rpx;
+}
 
-  .footer_operation_confirm {
-    height: 60rpx;
-    line-height: 60rpx;
-    width: 600rpx;
-    border-radius: 40rpx;
-    display: inline-block;
-    color: #fff;
-    background-color: $loong-datetime-primay;
-    font-size: 28rpx;
+.days_item,
+.week_item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60rpx;
+  height: 60rpx;
+}
+.days_item_wrap {
+  padding: 8rpx;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  &.is--range {
+    background-color: rgba($loong-datetime-primay, 0.1);
+  }
+  &.is--range-start {
+    border-top-left-radius: 30rpx;
+    border-bottom-left-radius: 30rpx;
+  }
+  &.is--range-end {
+    border-top-right-radius: 30rpx;
+    border-bottom-right-radius: 30rpx;
+  }
+}
+.days_item {
+  color: #000;
+  font-weight: 600;
+  position: relative;
+  &.is--disabled {
+    color: #cecece;
+  }
+}
+.days_item--current {
+  position: absolute;
+  padding: 6rpx;
+  background-color: red;
+  border-radius: 50%;
+  top: 0;
+  right: 0;
+}
+.datetime_days {
+  margin: 0 16rpx;
+}
+.datetime_days_content {
+  margin: 30rpx 0;
+}
+.datetime_footer {
+  border-top: solid 1rpx $loong-datetime-border-color;
+}
+.footer_operation {
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    &.is--disabled {
-      background-color: #ccc;
-    }
+.footer_operation_confirm {
+  height: 60rpx;
+  line-height: 60rpx;
+  width: 600rpx;
+  border-radius: 40rpx;
+  display: inline-block;
+  color: #fff;
+  background-color: $loong-datetime-primay;
+  font-size: 28rpx;
+
+  &.is--disabled {
+    background-color: #ccc;
   }
-  .is--activated {
-    border-radius: 50%;
-    color: #fff;
-    box-shadow: 0 0 10rpx $loong-datetime-primay;
-    background-color: $loong-datetime-primay;
-  }
+}
+.is--activated {
+  border-radius: 50%;
+  color: #fff;
+  box-shadow: 0 0 10rpx $loong-datetime-primay;
+  background-color: $loong-datetime-primay;
 }
 </style>

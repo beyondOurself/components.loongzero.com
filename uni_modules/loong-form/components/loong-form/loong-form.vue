@@ -116,7 +116,9 @@ defineExpose({ validate, reset });
 		</form>
 	</view>
 </template>
-<style lang="scss">
+<style lang="scss" scoped>
+@import "~@/uni_modules/loong-scss/index.scss";
 .loong-form {
+	@include base-component;
 }
 </style>

@@ -1,17 +1,17 @@
 {
-  "id": "loong-message",
-  "displayName": "loong-message",
+  "id": "loong-scss",
+  "displayName": "loong-scss",
   "version": "1.0.0",
-  "description": "loong-message",
+  "description": "loong-scss",
   "keywords": [
-    "loong-message"
+    "loong-scss"
 ],
   "repository": "",
   "engines": {
     "HBuilderX": "^3.1.0"
   },
   "dcloudext": {
-    "type": "component-vue",
+    "type": "sdk-js",
     "sale": {
       "regular": {
         "price": "0.00"
@@ -31,9 +31,7 @@
     "npmurl": ""
   },
   "uni_modules": {
-    "dependencies": [
-      "loong-scss"
-    ],
+    "dependencies": [],
     "encrypt": [],
     "platforms": {
       "cloud": {

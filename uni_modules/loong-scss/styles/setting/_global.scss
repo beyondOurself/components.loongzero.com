@@ -1,0 +1,103 @@
+// 项目前缀
+$loong-prefix: "loong-" !default;
+
+// 主色
+$loong-primary: #2979ff !default;
+$loong-primary-disable: lighten($loong-primary, 20%) !default;
+$loong-primary-light: lighten($loong-primary, 25%) !default;
+
+// 辅助色
+// 除了主色外的场景色，需要在不同的场景中使用（例如危险色表示危险的操作）。
+$loong-success: #18bc37 !default;
+$loong-success-disable: lighten($loong-success, 20%) !default;
+$loong-success-light: lighten($loong-success, 25%) !default;
+
+$loong-warning: #f3a73f !default;
+$loong-warning-disable: lighten($loong-warning, 20%) !default;
+$loong-warning-light: lighten($loong-warning, 25%) !default;
+
+$loong-error: #e43d33 !default;
+$loong-error-disable: lighten($loong-error, 20%) !default;
+$loong-error-light: lighten($loong-error, 25%) !default;
+
+$loong-info: #8f939c !default;
+$loong-info-disable: lighten($loong-info, 20%) !default;
+$loong-info-light: lighten($loong-info, 25%) !default;
+
+// 中性色
+// 中性色用于文本、背景和边框颜色。通过运用不同的中性色，来表现层次结构。
+$loong-main-color: #3a3a3a !default; // 主要文字
+$loong-base-color: #6a6a6a !default; // 常规文字
+$loong-secondary-color: #909399 !default; // 次要文字
+$loong-extra-color: #c7c7c7 !default; // 辅助说明
+
+// 边框颜色
+$loong-border-1: #f0f0f0 !default;
+$loong-border-2: #ededed !default;
+$loong-border-3: #dcdcdc !default;
+$loong-border-4: #b9b9b9 !default;
+
+// 边框宽度
+$loong-border-weight-sm: 1rpx !default;
+$loong-border-weight-base: 2rpx !default;
+$loong-border-weight-lg: 4rpx !default;
+$loong-border-weight-xl: 6rpx !default;
+
+// 常规色
+$loong-black: #000000 !default;
+$loong-white: #ffffff !default;
+$loong-transparent: rgba(
+  $color: #000000,
+  $alpha: 0,
+) !default;
+
+// 背景色
+$loong-bg-color: #f7f7f7 !default;
+
+/* 水平间距 */
+$loong-spacing-xs: 4rpx !default;
+$loong-spacing-sm: 8rpx !default;
+$loong-spacing-base: 16rpx !default;
+$loong-spacing-lg: 24rpx !default;
+$loong-spacing-xl: 32rpx !default;
+
+// 圆角
+$loong-radius-sm: 4rpx !default;
+$loong-radius-base: 8rpx !default;
+$loong-radius-lg: 16rpx !default;
+$loong-radius-round: 50% !default;
+
+// 阴影
+$loong-shadow-sm: 0 0 5px
+  rgba(
+    $color: #d8d8d8,
+    $alpha: 0.5,
+  ) !default;
+$loong-shadow-base: 0 1px 8px 1px
+  rgba(
+    $color: #a5a5a5,
+    $alpha: 0.2,
+  ) !default;
+$loong-shadow-lg: 0px 1px 10px 2px
+  rgba(
+    $color: #a5a4a4,
+    $alpha: 0.5,
+  ) !default;
+
+// 蒙版
+$loong-mask: rgba(
+  $color: #000000,
+  $alpha: 0.4,
+) !default;
+
+// 字体大小
+$loong-font-size-xs: 12rpx !default;
+$loong-font-size-sm: 16rpx !default;
+$loong-font-size-base: 28rpx !default;
+$loong-font-size-lg: 32rpx !default;
+$loong-font-size-xl: 48rpx !default;
+
+// 字重
+$loong-font-weight-light: 300 !default;
+$loong-font-weight-base: 400 !default;
+$loong-font-weight-bold: 600 !default;

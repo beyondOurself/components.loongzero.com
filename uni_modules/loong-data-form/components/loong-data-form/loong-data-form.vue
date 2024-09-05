@@ -2,9 +2,9 @@
  * @Description: 数据驱动表单
  * @Author: canlong.shen 
  * @Date: 2024-08-21 17:35:53
- * @LastEditors: canlong.shen 
- * @LastEditTime: 2024-08-23 11:26:37
- * @FilePath: /components.loongzero.com/uni_modules/loong-data-form/components/loong-data-form/loong-data-form.vue
+ * @LastEditors: canlong.shen
+ * @LastEditTime: 2024-09-05 14:10:10
+ * @FilePath: \components.loongzero.com\uni_modules\loong-data-form\components\loong-data-form\loong-data-form.vue
 -->
 
 <script setup>
@@ -49,7 +49,10 @@ const props = defineProps({
 		</loong-form>
 	</view>
 </template>
-<style lang="scss">
+<style lang="scss" scoped>
+@import "~@/uni_modules/loong-scss/index.scss";
+
 .loong-data-form {
+	@include base-component;
 }
 </style>
