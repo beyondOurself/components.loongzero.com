@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-22 11:55:44
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-05 12:00:32
+ * @LastEditTime: 2024-09-09 16:48:45
  * @FilePath: \components.loongzero.com\uni_modules\loong-radio\components\loong-radio\loong-radio.vue
 -->
 
@@ -85,7 +85,7 @@ const isActived = (value = "") => {
 
 $loong-radio-diameter: $loong-spacing-lg !default;
 $loong-radio-border-weight: $loong-border-weight-lg !default;
-$loong-radio-border-color: $loong-border-1 !default;
+$loong-radio-border-color: $loong-border-4 !default;
 $loong-radio-gap: $loong-spacing-sm !default;
 $loong-radio-color: $loong-white !default;
 $loong-radio-color-actived: $loong-primary  !default;

@@ -33,7 +33,6 @@
   "uni_modules": {
     "dependencies": [
       "loong-scss"
-
     ],
     "encrypt": [],
     "platforms": {

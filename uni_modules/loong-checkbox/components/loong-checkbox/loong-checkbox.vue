@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-23 11:35:35
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-09 14:39:48
+ * @LastEditTime: 2024-09-09 16:50:24
  * @FilePath: \components.loongzero.com\uni_modules\loong-checkbox\components\loong-checkbox\loong-checkbox.vue
 -->
 
@@ -129,7 +129,7 @@ $loong-checkbox-diameter: $loong-spacing-xl !default;
 $loong-checkbox-color: $loong-white !default;
 $loong-checkbox-color-disabled: $loong-border-2 !default;
 $loong-checkbox-border-width: $loong-border-weight-lg !default;
-$loong-checkbox-border-color: $loong-border-1 !default;
+$loong-checkbox-border-color: $loong-border-4 !default;
 $loong-checkbox-color-actived: $loong-primary !default;
 $loong-checkbox-radius: $loong-radius-base !default;
 $loong-checkbox-spacing-text: $loong-spacing-sm !default;
@@ -173,8 +173,8 @@ $loong-checkbox-spacing-item: $loong-spacing-base !default;
   width: 30%;
   height: 55%;
   border-color: none;
-  border-bottom: solid $loong-checkbox-border-width solid $loong-checkbox-color;
-  border-right: solid $loong-checkbox-border-width solid $loong-checkbox-color;
+  border-bottom: $loong-checkbox-border-width solid $loong-checkbox-color;
+  border-right: $loong-checkbox-border-width solid $loong-checkbox-color;
   transform: rotate(40deg);
   top: 10%;
   left: 32%;

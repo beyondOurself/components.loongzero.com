@@ -48,6 +48,6 @@ const change = (value = [], options = []) => {
 </template>
 <style lang="scss">
 .demo-checkbox {
-	padding: 100rpx;
+	padding: 16rpx;
 }
 </style>

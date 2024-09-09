@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-30 17:53:33
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-05 11:55:44
+ * @LastEditTime: 2024-09-09 16:46:23
  * @FilePath: \components.loongzero.com\uni_modules\loong-date-time\components\loong-date-time\loong-date-time.vue
 -->
 
@@ -42,6 +42,10 @@ const props = defineProps({
   placeholder: {
     type: [String],
     default: "请选择日期",
+  },
+  isFormItem: {
+    type: [Boolean],
+    default: false,
   },
 });
 
@@ -334,32 +338,33 @@ defineExpose({
     <view class="datetime_input">
       <slot :data="{ modelValue }">
         <input
-          class="datetime_input_body"
           disabled
+          class="datetime_input_body"
+          :class="{ 'is--form-item': isFormItem }"
           :value="inputValueGet"
           :placeholder="placeholder"
-          @click="open"
+          @click.stop="open"
         />
       </slot>
     </view>
     <!-- E 输入框 -->
     <view class="datetime_wrap" v-if="isOpened">
       <!-- S 遮罩 -->
-      <view class="datetime_mask" :style="maskStyleGet" @click="triggerMask"> </view>
+      <view class="datetime_mask" :style="maskStyleGet" @click.stop="triggerMask"> </view>
       <!-- E 遮罩 -->
 
       <!-- S 内容 -->
       <view class="datetime_main" :style="pickerStyleGet">
         <!-- S 操作 -->
         <view class="datetime_header">
-          <view class="header_prev" @click="triggerPrevMonth"></view>
-          <view class="header_month" @click="openYearMonth">
+          <view class="header_prev" @click.stop="triggerPrevMonth"></view>
+          <view class="header_month" @click.stop="openYearMonth">
             {{ selectedYearData }}年{{ selectedMonthData }}月
           </view>
-          <view class="header_next" @click="triggerNextMonth"> </view>
+          <view class="header_next" @click.stop="triggerNextMonth"> </view>
           <!-- S 关闭按钮 -->
 
-          <view class="datetime_header_cancel" @click="close">
+          <view class="datetime_header_cancel" @click.stop="close">
             <view class="datetime_header_cancel_right"></view>
             <view class="datetime_header_cancel_left"></view>
           </view>
@@ -396,7 +401,7 @@ defineExpose({
                         'is--activated': isActivated(item),
                         'is--disabled': item.disabled,
                       }"
-                      @click="handleItem(item)"
+                      @click.stop="handleItem(item)"
                       >{{ item.label }}
 
                       <view class="days_item--current" v-if="isCurrent(item)"></view>
@@ -421,13 +426,13 @@ defineExpose({
           />
 
           <input
-            v-if="['datetime', 'datetimeRange', 'dateRange'].includes(type)"
+            v-if="['datetime', 'datetimeRange'].includes(type)"
             class="selection_date_intput"
             type="text"
             disabled
             placeholder="选择时间"
             :value="selectedStartTime"
-            @click="changeTime('start')"
+            @click.stop="changeTime('start')"
           />
           <text v-if="['datetimeRange', 'dateRange'].includes(type)"> 至 </text>
           <input
@@ -449,7 +454,7 @@ defineExpose({
             disabled
             placeholder="选择时间"
             :value="selectedEndTime"
-            @click="changeTime('end')"
+            @click.stop="changeTime('end')"
           />
         </view>
         <!-- E 日期选择 -->
@@ -457,7 +462,7 @@ defineExpose({
         <view class="datetime_footer">
           <slot name="footer">
             <view class="footer_operation">
-              <button class="footer_operation_confirm" @click="confirm">确定</button>
+              <button class="footer_operation_confirm" @click.stop="confirm">确定</button>
             </view>
           </slot>
         </view>
@@ -495,12 +500,18 @@ $loong-datetime-header-color: $loong-main-color !default;
   @include base-component;
 }
 
+.datetime_input_body {
+  &.is--form-item {
+    text-align: right;
+  }
+}
 .datetime_wrap {
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 9999;
 }
 
 .datetime_mask {

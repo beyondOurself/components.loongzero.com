@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-26 18:13:42
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-08-26 18:56:39
+ * @LastEditTime: 2024-09-09 16:52:07
  * @FilePath: \components.loongzero.com\uni_modules\loong-slider\components\loong-slider\loong-slider.vue
 -->
 
@@ -40,7 +40,7 @@ const props = defineProps({
   },
   backgroundColor: {
     type: String,
-    default: "", // 滑块右侧背景条的颜色
+    default: "#b9b9b9", // 滑块右侧背景条的颜色
   },
   blockSize: {
     type: [Number, String],
@@ -97,5 +97,6 @@ const showValue = computed(() => {
 
 .loong-slider {
   @include base-component;
+  width: 100%;
 }
 </style>

@@ -123,7 +123,7 @@ $loong-form-item-color-error: $loong-error !default;
 }
 
 .form_item_main {
-  height: $loong-form-item-height;
+  min-height: $loong-form-item-height;
   display: flex;
   align-items: center;
   font-size: $loong-form-font-size;
@@ -142,7 +142,7 @@ $loong-form-item-color-error: $loong-error !default;
 
 .form_item_content {
   flex: 1;
-  height: $loong-form-item-height;
+  min-height: $loong-form-item-height;
   position: relative;
   display: flex;
   align-items: center;
@@ -151,7 +151,7 @@ $loong-form-item-color-error: $loong-error !default;
 
 .loong-input,
 .input_body {
-  height: $loong-form-item-height;
+  min-height: $loong-form-item-height;
 }
 
 .item_label_required {

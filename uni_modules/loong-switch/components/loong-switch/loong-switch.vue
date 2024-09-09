@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-26 19:00:25
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-05 14:05:35
+ * @LastEditTime: 2024-09-09 16:50:52
  * @FilePath: \components.loongzero.com\uni_modules\loong-switch\components\loong-switch\loong-switch.vue
 -->
 
@@ -122,7 +122,7 @@ watchEffect(() => {
 <style lang="scss" scoped>
 @import "~@/uni_modules/loong-scss/index.scss";
 
-$loong-switch-background-color: #b7b9ba !default;
+$loong-switch-background-color: $loong-border-4 !default;
 $loong-switch-background-color-actived: $loong-primary !default;
 $loong-switch-gap: 2rpx !default;
 $loong-switch-width: 80rpx !default;

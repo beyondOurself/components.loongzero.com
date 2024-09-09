@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-27 16:25:53
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-04 14:05:15
+ * @LastEditTime: 2024-09-09 16:06:30
  * @FilePath: \components.loongzero.com\uni_modules\loong-picker\components\loong-picker\loong-picker.vue
 -->
 
@@ -163,13 +163,13 @@ defineExpose({
   <view class="loong-picker" v-show="isOpened">
     <!-- S 遮罩 -->
 
-    <view class="picker_mask" :style="pickerMaskStyle" @click="triggerMask"></view>
+    <view class="picker_mask" :style="pickerMaskStyle" @click.stop="triggerMask"></view>
 
     <!-- E 遮罩 -->
     <view class="picker_main" :style="pickerStyle">
       <!-- S 选择区域 -->
       <view class="picker_header">
-        <view class="picker_header_cancel" @click="cancel">
+        <view class="picker_header_cancel" @click.stop="cancel">
           <slot name="cancel">
             <view class="picker_header_cancel_right"></view>
             <view class="picker_header_cancel_left"></view>
@@ -178,7 +178,7 @@ defineExpose({
         <view class="picker_header_content">
           <slot name="title">{{ title }}</slot>
         </view>
-        <view class="picker_header_confirm" @click="confirm">
+        <view class="picker_header_confirm" @click.stop="confirm">
           <slot name="confirm">确定</slot>
         </view>
       </view>
