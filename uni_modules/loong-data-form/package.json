@@ -31,7 +31,9 @@
     "npmurl": ""
   },
   "uni_modules": {
-    "dependencies": [],
+    "dependencies": [
+      "loong-scss"
+    ],
     "encrypt": [],
     "platforms": {
       "cloud": {

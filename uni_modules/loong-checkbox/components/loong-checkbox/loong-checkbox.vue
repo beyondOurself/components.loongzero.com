@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-23 11:35:35
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-05 11:44:09
+ * @LastEditTime: 2024-09-09 14:39:48
  * @FilePath: \components.loongzero.com\uni_modules\loong-checkbox\components\loong-checkbox\loong-checkbox.vue
 -->
 
@@ -11,7 +11,7 @@
 import { ref, watch, computed, watchEffect, onMounted, onUnmounted, toValue } from "vue";
 
 defineOptions({
-  name: "",
+  name: "LoongCheckbox",
 });
 
 const emits = defineEmits(["change"]);

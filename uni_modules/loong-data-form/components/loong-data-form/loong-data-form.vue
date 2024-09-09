@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-21 17:35:53
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-05 14:10:10
+ * @LastEditTime: 2024-09-09 14:37:03
  * @FilePath: \components.loongzero.com\uni_modules\loong-data-form\components\loong-data-form\loong-data-form.vue
 -->
 
@@ -43,6 +43,11 @@ const props = defineProps({
 							<loong-radio  v-model="model[prop]" :options="range" ></loong-radio>
 						</template>
 						<!-- E 单选框 -->
+						<!-- S 复选框 -->
+						<template v-if="type === COMPONENT_TYPE_ENUM.CHECKBOX">
+							<loong-checkbox  v-model="model[prop]" :options="range" ></loong-checkbox>
+						</template>
+						<!-- E 复选框 -->
 					</slot>
 				</loong-form-item>
 			</template>
