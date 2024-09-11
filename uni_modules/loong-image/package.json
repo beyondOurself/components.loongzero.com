@@ -1,7 +1,7 @@
 {
   "id": "loong-image",
   "displayName": "loong-image",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "loong-image",
   "keywords": [
     "loong-image"
@@ -44,11 +44,11 @@
       },
       "client": {
         "Vue": {
-          "vue2": "n",
+          "vue2": "u",
           "vue3": "y"
         },
         "App": {
-          "app-vue": "y",
+          "app-vue": "u",
           "app-nvue": "u",
           "app-uvue": "u"
         },
@@ -59,15 +59,14 @@
           "QQ浏览器(Android)": "u"
         },
         "H5-pc": {
-          "Chrome": "y",
+          "Chrome": "u",
           "IE": "u",
           "Edge": "u",
           "Firefox": "u",
           "Safari": "u"
         },
         "小程序": {
-          "微信": {
-            "minVersion": "2.10.3"
+        "微信": {
         },
           "阿里": "u",
           "百度": "u",

@@ -52,7 +52,6 @@ const change = (event = {}) => {
   modelValue.value = value ? activedOption.value : inactiveOption.value;
   const currentOption = value ? activedOption : inactiveOption;
   emits("change", value, currentOption);
-  console.log(value, currentOption);
 };
 // ---> E 值绑定 <---
 
