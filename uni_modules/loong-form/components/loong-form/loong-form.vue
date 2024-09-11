@@ -22,8 +22,6 @@ const props = defineProps({
 // S >>> 表单 form  <<<
 
 const formSubmit = (e) => {
-	console.log('formSubmit', e);
-
 	validate();
 };
 

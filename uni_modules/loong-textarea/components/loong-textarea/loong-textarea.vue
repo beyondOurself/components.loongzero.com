@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-26 15:00:49
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-09 16:36:22
+ * @LastEditTime: 2024-09-10 18:19:39
  * @FilePath: \components.loongzero.com\uni_modules\loong-textarea\components\loong-textarea\loong-textarea.vue
 -->
 
@@ -32,6 +32,10 @@ const props = defineProps({
   height: {
     type: [String, Number],
     defualt: "",
+  },
+  placeholder: {
+    type: String,
+    default: "请输入",
   },
 });
 
@@ -105,19 +109,26 @@ const autoHeightGet = computed(() => {
   return !height;
 });
 // ---> E 样式控制 <---
+
+// ---> S placeholder <---
+
+const placeholderGet = computed(() => {
+  return props.placeholder || "请选择";
+});
+// ---> E placeholder <---
 </script>
 <template>
   <view class="loong-textarea" :class="textareaWrapClass">
     <!-- S 主体 -->
     <textarea
       class="textarea_main"
-      placeholder="请输入"
       :disabled="disabled"
       :style="textareaStyle"
       :class="textareaClass"
       :value="modelValue"
       :maxlength="maxlength"
       :auto-height="autoHeightGet"
+      :placeholder="placeholderGet"
       :placeholder-style="placeholderStyle"
       @blur="blur"
       @focus="focus"

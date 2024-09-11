@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-21 10:29:38
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-09 16:31:43
+ * @LastEditTime: 2024-09-10 18:45:20
  * @FilePath: \components.loongzero.com\pages\playground\data-form\data-form.vue
 -->
 <script setup>
@@ -36,6 +36,7 @@ const options = ref([
     label: "label",
     prop: "prop1",
     type: COMPONENT_TYPE_ENUM.INPUT,
+    rules: true
   },
   {
     label: "label2",
@@ -93,49 +94,64 @@ const options = ref([
   {
     label: "label5",
     prop: "prop5",
-    type: COMPONENT_TYPE_ENUM.SLIDER,
+    type: COMPONENT_TYPE_ENUM.PICKER,
+    range: [[{ label: "1", value: "1111" }, 2, 3, 4]],
   },
   {
     label: "label6",
     prop: "prop6",
-    type: COMPONENT_TYPE_ENUM.DATE,
+    type: COMPONENT_TYPE_ENUM.SLIDER,
   },
   {
     label: "label7",
     prop: "prop7",
-    type: COMPONENT_TYPE_ENUM.DATETIME,
+    type: COMPONENT_TYPE_ENUM.DATE,
   },
   {
     label: "label8",
     prop: "prop8",
-    type: COMPONENT_TYPE_ENUM.DATE_RANGE,
+    type: COMPONENT_TYPE_ENUM.DATETIME,
   },
   {
     label: "label9",
     prop: "prop9",
-    type: COMPONENT_TYPE_ENUM.DATETIME_RANGE,
-  },
-  {
-    label: "label10",
-    prop: "prop11",
-    type: COMPONENT_TYPE_ENUM.DATETIME_RANGE,
+    type: COMPONENT_TYPE_ENUM.DATE_RANGE,
   },
   {
     label: "label10",
     prop: "prop10",
+    type: COMPONENT_TYPE_ENUM.DATETIME_RANGE,
+  },
+  {
+    label: "label11",
+    prop: "prop11",
     type: COMPONENT_TYPE_ENUM.TEXTAREA,
   },
 ]);
-const model = ref({});
+const model = ref({
+  prop2: 1,
+});
 
 const test = () => {
   console.log("COMPONENT_TYPE_ENUM", ">>>", COMPONENT_TYPE_ENUM.INPUT);
+  // model.value.prop2 = 2;
+  validate();
+};
+
+const LOONG_DATA_FORM_REF = ref(null);
+const validate = () => {
+  LOONG_DATA_FORM_REF.value.validate((values) => {
+    console.log("values", ">>>", values);
+  });
 };
 </script>
 <template>
   <view class="form">
+    888 {{ model }}
     <button type="default" @click="test">测试</button>
-    <loong-data-form :model="model" :options="options"></loong-data-form>
+    <!-- <loong-data-form :modelValue="model" :options="options"></loong-data-form> -->
+    <!-- 未绑定默认值 -->
+    <loong-data-form ref="LOONG_DATA_FORM_REF" :options="options"></loong-data-form>
   </view>
 </template>
 <style lang="scss" scoped></style>

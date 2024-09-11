@@ -9,15 +9,13 @@ const props = defineProps({
     type: [Boolean],
     default: false,
   },
+  placeholder: {
+    type: String,
+    default: "请输入",
+  },
 });
 
 const inputValue = defineModel({ type: String, default: "" });
-
-// ---> S placeHolder <---
-const placeholderStype = computed(() => {
-  return "text-align:right;";
-});
-// ---> E placeHolder <---
 
 // ---> S input <---
 const inputClass = computed(() => {
@@ -29,16 +27,22 @@ const inputClass = computed(() => {
   ];
 });
 // ---> E input <---
+
+// ---> S placeholder <---
+
+const placeholderGet = computed(() => {
+  return props.placeholder || "请输入";
+});
+// ---> E placeholder <---
 </script>
 <template>
   <view class="loong-input">
     <input
       v-model="inputValue"
       class="input_body"
-      :class="inputClass"
-      placeholder-class="input_placeholder"
       name="input"
-      placeholder="这是一个输入框222"
+      :placeholder="placeholderGet"
+      :class="inputClass"
     />
   </view>
 </template>
@@ -54,10 +58,6 @@ $loong-form-input-height: 86rpx !default;
 
 .input_body {
   height: $loong-form-input-height;
-}
-.input_placeholder {
-  font-size: $loong-form-font-size;
-  color: #cecece;
 }
 .input_body_form_item {
   text-align: right;

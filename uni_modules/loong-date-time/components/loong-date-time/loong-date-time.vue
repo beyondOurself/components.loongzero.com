@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-30 17:53:33
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-09 16:46:23
+ * @LastEditTime: 2024-09-10 18:19:11
  * @FilePath: \components.loongzero.com\uni_modules\loong-date-time\components\loong-date-time\loong-date-time.vue
 -->
 
@@ -41,7 +41,7 @@ const props = defineProps({
   },
   placeholder: {
     type: [String],
-    default: "请选择日期",
+    default: "请选择",
   },
   isFormItem: {
     type: [Boolean],
@@ -326,7 +326,12 @@ const inputValueGet = computed(() => {
 });
 
 // ---> E 输入框选择 <---
+// ---> S placeholder <---
 
+const placeholderGet = computed(() => {
+  return props.placeholder || "请选择";
+});
+// ---> E placeholder <---
 defineExpose({
   open,
   close,
@@ -342,7 +347,7 @@ defineExpose({
           class="datetime_input_body"
           :class="{ 'is--form-item': isFormItem }"
           :value="inputValueGet"
-          :placeholder="placeholder"
+          :placeholder="placeholderGet"
           @click.stop="open"
         />
       </slot>

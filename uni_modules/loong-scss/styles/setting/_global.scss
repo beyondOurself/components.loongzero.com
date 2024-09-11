@@ -4,25 +4,25 @@ $loong-prefix: "loong-" !default;
 // 主色
 $loong-primary: #2979ff !default;
 $loong-primary-disable: lighten($loong-primary, 20%) !default;
-$loong-primary-light: lighten($loong-primary, 25%) !default;
+$loong-primary-light: lighten($loong-primary,40%) !default;
 
 // 辅助色
 // 除了主色外的场景色，需要在不同的场景中使用（例如危险色表示危险的操作）。
 $loong-success: #18bc37 !default;
 $loong-success-disable: lighten($loong-success, 20%) !default;
-$loong-success-light: lighten($loong-success, 25%) !default;
+$loong-success-light: lighten($loong-success,40%) !default;
 
 $loong-warning: #f3a73f !default;
 $loong-warning-disable: lighten($loong-warning, 20%) !default;
-$loong-warning-light: lighten($loong-warning, 25%) !default;
+$loong-warning-light: lighten($loong-warning,40%) !default;
 
 $loong-error: #e43d33 !default;
 $loong-error-disable: lighten($loong-error, 20%) !default;
-$loong-error-light: lighten($loong-error, 25%) !default;
+$loong-error-light: lighten($loong-error,40%) !default;
 
 $loong-info: #8f939c !default;
 $loong-info-disable: lighten($loong-info, 20%) !default;
-$loong-info-light: lighten($loong-info, 25%) !default;
+$loong-info-light: lighten($loong-info,40%) !default;
 
 // 中性色
 // 中性色用于文本、背景和边框颜色。通过运用不同的中性色，来表现层次结构。

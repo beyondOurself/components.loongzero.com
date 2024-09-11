@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-21 10:57:45
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-05 14:14:32
+ * @LastEditTime: 2024-09-10 18:50:41
  * @FilePath: \components.loongzero.com\uni_modules\loong-message\components\loong-message\loong-message.vue
 -->
 
@@ -133,7 +133,6 @@ $loong-message-spacing: $loong-spacing-lg !default;
   top: -50%;
   left: 0;
   transition: top 600ms ease-in-out;
-  font-weight: $loong-font-weight-bold;
 }
 .message_main--success {
   color: $loong-message-color-success;

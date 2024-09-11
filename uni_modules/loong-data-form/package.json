@@ -32,7 +32,19 @@
   },
   "uni_modules": {
     "dependencies": [
-      "loong-scss"
+      "loong-scss",
+      "loong-checkbox",
+      "loong-date-time",
+      "loong-form",
+      "loong-form-item",
+      "loong-input",
+      "loong-message",
+      "loong-picker",
+      "loong-radio",
+      "loong-slider",
+      "loong-switch",
+      "loong-textarea",
+      "loong-utils"
     ],
     "encrypt": [],
     "platforms": {

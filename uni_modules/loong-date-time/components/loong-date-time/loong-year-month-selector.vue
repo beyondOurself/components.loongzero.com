@@ -186,7 +186,7 @@ $loong-time-header-color: $loong-main-color !default;
   left: 0;
   right: 0;
   background-color: $loong-time-mask-color;
-
+  z-index: 9999;
   @include base-component;
 }
 

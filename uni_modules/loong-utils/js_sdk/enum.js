@@ -5,6 +5,7 @@ import {
 export const COMPONENT_TYPE_ENUM = getEnumProxy({
 	INPUT: 'input',
 	TEXTAREA: 'textarea',
+	PICKER: 'picker',
 	RADIO: 'radio',
 	CHECKBOX: 'checkbox',
 	SLIDER: 'slider',
