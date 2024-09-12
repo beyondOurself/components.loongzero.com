@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-21 10:29:38
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-12 14:22:53
+ * @LastEditTime: 2024-09-12 15:45:28
  * @FilePath: \components.loongzero.com\pages\playground\data-form\data-form.vue
 -->
 <script setup>
@@ -36,6 +36,7 @@ const options = ref([
     prop: "prop0",
     rules: true,
     hollow: true,
+    label: "label0",
   },
   {
     label: "label",
@@ -150,6 +151,10 @@ const validate = () => {
     console.log("values", ">>>", values);
   });
 };
+
+const changeErrors = (errors = []) => {
+    console.log('changeErrors',errors);
+}
 </script>
 <template>
   <view class="form">
@@ -157,7 +162,7 @@ const validate = () => {
     <button type="default" @click="test">测试</button>
     <!-- <loong-data-form :modelValue="model" :options="options"></loong-data-form> -->
     <!-- 未绑定默认值 -->
-    <loong-data-form ref="LOONG_DATA_FORM_REF" :modelValue="model" :options="options" >
+    <loong-data-form ref="LOONG_DATA_FORM_REF" :modelValue="model" :options="options" @error="changeErrors" >
       <template #prop0>
       <loong-input v-model="model.prop0" placeholder="请输入"></loong-input>
         <view>愚蠢的地球人11</view>

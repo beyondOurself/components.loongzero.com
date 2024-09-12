@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-21 17:35:53
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-12 14:22:33
+ * @LastEditTime: 2024-09-12 15:44:38
  * @FilePath: \components.loongzero.com\uni_modules\loong-data-form\components\loong-data-form\loong-data-form.vue
 -->
 
@@ -29,11 +29,13 @@ const props = defineProps({
     default: () => [],
   },
   /** 全部 显示空心的表单项 */
-  hollows:{ 
+  hollows: {
     type: Boolean,
     default: false,
-  }
+  },
 });
+
+const emits = defineEmits(['error'])
 
 // ---> S 初始化 model <---
 
@@ -48,7 +50,6 @@ const initModelValue = () => {
       modelValue.value[prop] = value;
     }
   }
-
 };
 initModelValue();
 
@@ -60,12 +61,13 @@ const optionsGet = computed(() => {
   const { options = [] } = props;
 
   return options.map((option = {}) => {
-    const { rules = [] } = option;
+    const { rules = [], label = "", prop = "" } = option;
     const optionCopy = { ...option };
     if (typeof rules === "boolean") {
       optionCopy.rules = [
         {
           required: true,
+          message: `${label || prop} 不能为空`,
         },
       ];
     }
@@ -90,13 +92,21 @@ const slots = useSlots();
 
 // ---> E 插槽内容 <---
 
+// ---> S 错误信息 <---
+
+const changeError = (errors = []) => {
+  emits("error", errors);
+}
+
+// ---> E 错误信息 <---
+
 defineExpose({
   validate,
 });
 </script>
 <template>
   <view class="loong-data-form">
-    <loong-form :model="modelValue" ref="LOONG_FORM_REF">
+    <loong-form :model="modelValue" ref="LOONG_FORM_REF" @error="changeError">
       <template
         v-for="(
           {
@@ -112,7 +122,12 @@ defineExpose({
         ) of optionsGet"
         :key="index"
       >
-        <loong-form-item :prop="prop" :label="label" :rules="rules" :hollow="hollow || hollows">
+        <loong-form-item
+          :prop="prop"
+          :label="label"
+          :rules="rules"
+          :hollow="hollow || hollows"
+        >
           <slot :name="prop" v-if="slots[prop]"> </slot>
           <!-- S 后备内容 -->
           <template v-else>

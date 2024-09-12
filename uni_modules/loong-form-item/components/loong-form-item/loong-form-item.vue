@@ -56,7 +56,7 @@ watch(formMessage, (message = []) => {
     if (findMessage) {
       isError.value = true;
       const { message = "", field = "" } = findMessage;
-      if (message === `${field} is required`) {
+      if (message.includes('is required')) {
         errorMessage.value = `${props.label}不能为空`;
       } else {
         errorMessage.value = message;
