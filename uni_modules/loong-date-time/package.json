@@ -1,7 +1,7 @@
 {
 	"id": "loong-date-time",
-	"displayName": "vue3 数据驱动时间日期组件(纯粹支持小程序)",
-	"version": "1.0.1",
+	"displayName": "loong-date-time vue3 数据驱动时间日期组件(纯粹支持小程序)",
+	"version": "1.0.2",
 	"description": "受不了官方组件库的大杂烩,vue3 重写只支持小程序、H5、",
 	"keywords": [
         "loong-date-time"

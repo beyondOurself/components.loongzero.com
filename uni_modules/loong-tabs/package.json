@@ -1,7 +1,7 @@
 {
   "id": "loong-tabs",
-  "displayName": "loong-tabs",
-  "version": "1.0.0",
+  "displayName": "loong-tabs vue3 tab栏滑动切换(纯粹支持小程序)",
+  "version": "1.0.1",
   "description": "loong-tabs",
   "keywords": [
     "loong-tabs"
