@@ -2,9 +2,9 @@
  * @Description: 复选框 
  * @Author: canlong.shen 
  * @Date: 2024-08-23 11:35:35
- * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-09 16:50:24
- * @FilePath: \components.loongzero.com\uni_modules\loong-checkbox\components\loong-checkbox\loong-checkbox.vue
+ * @LastEditors: canlong.shen 
+ * @LastEditTime: 2024-09-12 14:28:59
+ * @FilePath: /components.loongzero.com/uni_modules/loong-checkbox/components/loong-checkbox/loong-checkbox.vue
 -->
 
 <script setup>
