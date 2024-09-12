@@ -3,12 +3,12 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-21 10:29:38
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-10 18:45:20
+ * @LastEditTime: 2024-09-12 14:22:53
  * @FilePath: \components.loongzero.com\pages\playground\data-form\data-form.vue
 -->
 <script setup>
 import { onMounted, ref } from "vue";
-import { COMPONENT_TYPE_ENUM } from "@/uni_modules/loong-utils/js_sdk/enum.js";
+import { COMPONENT_TYPE_ENUM } from "@/uni_modules/loong-utils/enum.js";
 const props = defineProps({});
 
 const labelWidth = ref(100);
@@ -33,10 +33,16 @@ const reset = () => {
 
 const options = ref([
   {
+    prop: "prop0",
+    rules: true,
+    hollow: true,
+  },
+  {
     label: "label",
     prop: "prop1",
     type: COMPONENT_TYPE_ENUM.INPUT,
-    rules: true
+    rules: true,
+
   },
   {
     label: "label2",
@@ -147,11 +153,16 @@ const validate = () => {
 </script>
 <template>
   <view class="form">
-    888 {{ model }}
+    {{ model }}
     <button type="default" @click="test">测试</button>
     <!-- <loong-data-form :modelValue="model" :options="options"></loong-data-form> -->
     <!-- 未绑定默认值 -->
-    <loong-data-form ref="LOONG_DATA_FORM_REF" :options="options"></loong-data-form>
+    <loong-data-form ref="LOONG_DATA_FORM_REF" :modelValue="model" :options="options" >
+      <template #prop0>
+      <loong-input v-model="model.prop0" placeholder="请输入"></loong-input>
+        <view>愚蠢的地球人11</view>
+      </template>
+    </loong-data-form>
   </view>
 </template>
 <style lang="scss" scoped></style>

@@ -26,6 +26,10 @@ const props = defineProps({
     type: [Array],
     default: [],
   },
+  hollow: {
+    type: [Boolean],
+    default: false,
+  },
 });
 
 const maxLabelWidth = inject("form__max_label_width");
@@ -60,6 +64,8 @@ watch(formMessage, (message = []) => {
     } else {
       errorMessage.value = "";
     }
+  } else {
+    errorMessage.value = "";
   }
 });
 
@@ -93,7 +99,8 @@ const mainClass = computed(() => {
 });
 </script>
 <template>
-  <view class="loong-form-item">
+  <slot v-if="hollow"></slot>
+  <view v-else class="loong-form-item">
     <view class="form_item_main" :class="mainClass">
       <view class="form_item_label" :style="labelStyler">
         <slot name="label" style="">

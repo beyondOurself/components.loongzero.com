@@ -3,12 +3,12 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-21 10:29:38
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-11 09:52:18
+ * @LastEditTime: 2024-09-12 14:00:57
  * @FilePath: \components.loongzero.com\pages\playground\form\form.vue
 -->
 <script setup>
 import { onMounted, ref } from 'vue';
-import { COMPONENT_TYPE_ENUM } from '@/uni_modules/loong-utils/js_sdk/enum.js';
+import { COMPONENT_TYPE_ENUM } from '@/uni_modules/loong-utils/enum.js';
 const props = defineProps({});
 
 const labelWidth = ref(100);

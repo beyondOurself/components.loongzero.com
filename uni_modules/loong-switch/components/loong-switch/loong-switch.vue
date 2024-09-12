@@ -2,9 +2,9 @@
  * @Description: 开关选择器
  * @Author: canlong.shen 
  * @Date: 2024-08-26 19:00:25
- * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-09 16:50:52
- * @FilePath: \components.loongzero.com\uni_modules\loong-switch\components\loong-switch\loong-switch.vue
+ * @LastEditors: canlong.shen 
+ * @LastEditTime: 2024-09-11 10:58:27
+ * @FilePath: /components.loongzero.com/uni_modules/loong-switch/components/loong-switch/loong-switch.vue
 -->
 
 <script setup>

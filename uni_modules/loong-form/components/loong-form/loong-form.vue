@@ -44,7 +44,7 @@ onMounted(() => {});
 // E >>> 自动设置label 宽度  <<<
 
 // S >>> 表单校验规则  <<<
-const formMessage = shallowRef({});
+const formMessage = shallowRef([]);
 provide('form__message', formMessage);
 
 const formRules = shallowRef({});
@@ -75,6 +75,8 @@ const validate = (call = () => {}) => {
 				}
 				resolve(null);
 				return;
+			}else{
+				formMessage.value = [];
 			}
 
 			if (isProxy(modelValue)) {

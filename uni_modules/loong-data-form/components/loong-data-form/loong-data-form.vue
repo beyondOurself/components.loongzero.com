@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-21 17:35:53
  * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-10 18:43:58
+ * @LastEditTime: 2024-09-12 14:22:33
  * @FilePath: \components.loongzero.com\uni_modules\loong-data-form\components\loong-data-form\loong-data-form.vue
 -->
 
@@ -17,8 +17,9 @@ import {
   onUnmounted,
   toRefs,
   toValue,
+  useSlots,
 } from "vue";
-import { COMPONENT_TYPE_ENUM } from "@/uni_modules/loong-utils/js_sdk/enum.js";
+import { COMPONENT_TYPE_ENUM } from "@/uni_modules/loong-utils/enum.js";
 defineOptions({
   name: "LoongDateForm",
 });
@@ -27,6 +28,11 @@ const props = defineProps({
     type: [Array],
     default: () => [],
   },
+  /** 全部 显示空心的表单项 */
+  hollows:{ 
+    type: Boolean,
+    default: false,
+  }
 });
 
 // ---> S 初始化 model <---
@@ -43,7 +49,6 @@ const initModelValue = () => {
     }
   }
 
-  console.log("modelValue22", modelValue.value);
 };
 initModelValue();
 
@@ -79,6 +84,12 @@ const validate = (call = () => {}) => {
 
 // ---> E 提交 <---
 
+// ---> S 插槽内容 <---
+
+const slots = useSlots();
+
+// ---> E 插槽内容 <---
+
 defineExpose({
   validate,
 });
@@ -95,12 +106,16 @@ defineExpose({
             range = [],
             placeholder = '',
             rules = [],
+            hollow = false,
           } = {},
           index
-        ) in optionsGet"
+        ) of optionsGet"
+        :key="index"
       >
-        <loong-form-item :prop="prop" :label="label" :rules="rules">
-          <slot :name="prop">
+        <loong-form-item :prop="prop" :label="label" :rules="rules" :hollow="hollow || hollows">
+          <slot :name="prop" v-if="slots[prop]"> </slot>
+          <!-- S 后备内容 -->
+          <template v-else>
             <!-- S 输入框 -->
             <template v-if="type === COMPONENT_TYPE_ENUM.INPUT">
               <loong-input
@@ -202,7 +217,8 @@ defineExpose({
               ></loong-textarea>
             </template>
             <!-- E 文本输入框 -->
-          </slot>
+          </template>
+          <!-- E 后备内容 -->
         </loong-form-item>
       </template>
     </loong-form>
