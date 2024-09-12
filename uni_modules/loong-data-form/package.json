@@ -1,8 +1,8 @@
 {
   "id": "loong-data-form",
-  "displayName": "loong-data-form",
-  "version": "1.0.2",
-  "description": "loong-data-form",
+  "displayName": "vue3 数据驱动表单组件",
+  "version": "1.0.3",
+  "description": "受不了官方组件库的大杂烩，vue3 重写只支持小程序、H5、",
   "keywords": [
     "loong-data-form"
 ],

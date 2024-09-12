@@ -1,8 +1,8 @@
 {
   "id": "loong-slider",
-  "displayName": "loong-slider",
-  "version": "1.0.0",
-  "description": "loong-slider",
+  "displayName": "vue3 数据驱动滑动选择组件(纯粹支持小程序)",
+  "version": "1.0.1",
+  "description": "受不了官方组件库的大杂烩,vue3 重写只支持小程序、H5、",
   "keywords": [
     "loong-slider"
 ],

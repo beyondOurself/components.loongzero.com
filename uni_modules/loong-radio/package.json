@@ -1,8 +1,8 @@
 {
   "id": "loong-radio",
-  "displayName": "loong-radio",
-  "version": "1.0.0",
-  "description": "loong-radio",
+  "displayName": "vue3 数据驱动单选框组件(纯粹支持小程序)",
+  "version": "1.0.1",
+  "description": "受不了官方组件库的大杂烩,vue3 重写只支持小程序、H5、",
   "keywords": [
     "loong-radio"
 ],
