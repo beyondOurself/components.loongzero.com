@@ -3,14 +3,16 @@
  * @Author: canlong.shen 
  * @Date: 2024-06-20 14:41:19
  * @LastEditors: canlong.shen 
- * @LastEditTime: 2024-09-13 11:53:25
- * @FilePath: /components.loongzero.com/uni_modules/loong-image/components/loong-image/loong-image.vue
+ * @LastEditTime: 2024-09-13 11:55:31
+ * @FilePath: /components.loongzero.com/uni_modules/loong-icon/components/loong-icon/loong-icon.vue
 -->
 
 <script setup>
 import { computed, ref, provide, inject } from 'vue';
 
-const { imagePrefix = '' } = inject('loong_components_config');
+defineOptions({
+	name: 'LoongIcon'
+});
 
 const props = defineProps({
 	src: {
@@ -30,7 +32,7 @@ const props = defineProps({
 		default: ''
 	}
 });
-
+const { imagePrefix = '' } = inject('loong_components_config');
 const srcGet = computed(() => {
 	const { prefix = '', src = '' } = props;
 
@@ -84,12 +86,12 @@ const imageStylerGet = computed(() => {
 </script>
 
 <template>
-	<view class="loong-base-image">
+	<view class="loong-icon">
 		<image mode="heightFix" :style="imageStylerGet" :src="srcGet"></image>
 	</view>
 </template>
 <style lang="scss" scoped>
-.loong-base-image {
+.loong-icon {
 	display: inline-block;
 }
 </style>
