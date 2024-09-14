@@ -2,9 +2,9 @@
  * @Description: 
  * @Author: canlong.shen 
  * @Date: 2024-08-21 10:29:38
- * @LastEditors: canlong.shen
- * @LastEditTime: 2024-09-12 15:45:28
- * @FilePath: \components.loongzero.com\pages\playground\data-form\data-form.vue
+ * @LastEditors: canlong.shen 
+ * @LastEditTime: 2024-09-13 16:04:17
+ * @FilePath: /components.loongzero.com/pages/playground/data-form/data-form.vue
 -->
 <script setup>
 import { onMounted, ref } from "vue";
@@ -165,7 +165,7 @@ const changeErrors = (errors = []) => {
     <loong-data-form ref="LOONG_DATA_FORM_REF" :modelValue="model" :options="options" @error="changeErrors" >
       <template #prop0>
       <loong-input v-model="model.prop0" placeholder="请输入"></loong-input>
-        <view>愚蠢的地球人11</view>
+        <view>愚蠢的地球人11{{true ?  1 : 2}}</view>
       </template>
     </loong-data-form>
   </view>

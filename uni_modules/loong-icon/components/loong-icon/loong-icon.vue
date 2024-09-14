@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-06-20 14:41:19
  * @LastEditors: canlong.shen 
- * @LastEditTime: 2024-09-13 11:55:31
+ * @LastEditTime: 2024-09-14 16:50:37
  * @FilePath: /components.loongzero.com/uni_modules/loong-icon/components/loong-icon/loong-icon.vue
 -->
 
@@ -25,73 +25,56 @@ const props = defineProps({
 	},
 	width: {
 		type: [String],
-		default: '48rpx'
+		default: '48'
 	},
 	height: {
 		type: [String],
 		default: ''
+	},
+	prefix: {
+		type: [String],
+		default: 'imagePrefix'
 	}
 });
-const { imagePrefix = '' } = inject('loong_components_config');
-const srcGet = computed(() => {
-	const { prefix = '', src = '' } = props;
 
-	if (!src) {
-		return '';
-	}
+// ---> S 图片地址 <---
 
-	if (src.startsWith('https')) {
-		return src;
-	}
-
-	let assetsUrl = src;
-
-	if (!src.startsWith('/')) {
-		assetsUrl = `/${assetsUrl}`;
-	}
-
-	if (!src.endsWith('/')) {
-		assetsUrl = `${assetsUrl}.svg `;
-	}
-	return `${prefix || imagePrefix}${src}`;
-});
-
-const isNumber = (str) => {
-	const numberRegex = /^\d+$/;
-	return numberRegex.test(str);
-};
-
-const imageStylerGet = computed(() => {
-	const { width = '', height = '' } = props;
+const styleGet = computed(() => {
 	const styler = {};
+	const { prefix = '', src = '', width = '', height = '' } = props;
+	const { [prefix]: srcPrefix = '' } = inject('loong_components_config') || {};
+	let imgSrc = src;
+	if (srcPrefix) {
+		imgSrc = `${srcPrefix}${imgSrc}`;
+	}
 
-	if (isNumber(width)) {
+	if (imgSrc) {
+		styler.backgroundImage = `url(${imgSrc})`;
+	}
+
+	if (width) {
 		styler.width = `${width}rpx`;
-		if (!height) {
-			styler.height = `${width}rpx`;
-		}
-	} else {
-		styler.width = width;
-		styler.height = height;
-		if (!height) {
-			styler.height = width;
-		}
 	}
 
-	if (height && isNumber(height)) {
-		styler.height = `${height}rpx`;
+	if (height || width) {
+		styler.height = `${height || width}rpx`;
 	}
+	
+
 	return styler;
 });
+
+// ---> E 图片地址 <---
 </script>
 
 <template>
-	<view class="loong-icon">
-		<image mode="heightFix" :style="imageStylerGet" :src="srcGet"></image>
-	</view>
+	<view class="loong-icon" :style="styleGet"></view>
 </template>
 <style lang="scss" scoped>
 .loong-icon {
 	display: inline-block;
+	background-size: cover;
+	background-repeat: no-repeat; /* 防止背景图片重复 */
+	background-position: center; /* 背景图片居中 */
 }
 </style>

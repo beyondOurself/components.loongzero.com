@@ -1,10 +1,10 @@
 {
-  "id": "loong-icon",
-  "displayName": "loong-icon vue3 数据驱动 图标组件",
-  "version": "1.0.1",
-  "description": "loong-icon  简洁，快 ， 只想支持小程序",
+  "id": "loong-link",
+  "displayName": "loong-link",
+  "version": "1.0.0",
+  "description": "loong-link",
   "keywords": [
-    "loong-icon"
+    "loong-link"
 ],
   "repository": "",
   "engines": {
@@ -31,7 +31,9 @@
     "npmurl": ""
   },
   "uni_modules": {
-    "dependencies": [],
+    "dependencies": [
+      "loong-scss"
+    ],
     "encrypt": [],
     "platforms": {
       "cloud": {
