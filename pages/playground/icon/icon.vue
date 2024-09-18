@@ -8,7 +8,7 @@ const props = defineProps({});
 </script>
 <template>
 	<view class="icon">
-		<loong-icon width="100" src="/user/login-pwd-decorative.svg"></loong-icon>
+		<loong-icon width="540" height="340" src="/user/login-pwd-decorative.svg"></loong-icon>
 	</view>
 </template>
 <style lang="scss" scoped>

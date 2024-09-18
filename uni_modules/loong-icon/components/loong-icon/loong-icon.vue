@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-06-20 14:41:19
  * @LastEditors: canlong.shen 
- * @LastEditTime: 2024-09-14 16:50:37
+ * @LastEditTime: 2024-09-14 18:05:12
  * @FilePath: /components.loongzero.com/uni_modules/loong-icon/components/loong-icon/loong-icon.vue
 -->
 
@@ -72,8 +72,8 @@ const styleGet = computed(() => {
 </template>
 <style lang="scss" scoped>
 .loong-icon {
-	display: inline-block;
-	background-size: cover;
+	display: block;
+	background-size: contain;
 	background-repeat: no-repeat; /* 防止背景图片重复 */
 	background-position: center; /* 背景图片居中 */
 }
