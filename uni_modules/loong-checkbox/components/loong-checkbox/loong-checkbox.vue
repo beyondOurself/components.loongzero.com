@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-23 11:35:35
  * @LastEditors: canlong.shen 
- * @LastEditTime: 2024-09-12 14:28:59
+ * @LastEditTime: 2024-09-18 09:47:21
  * @FilePath: /components.loongzero.com/uni_modules/loong-checkbox/components/loong-checkbox/loong-checkbox.vue
 -->
 
@@ -142,7 +142,7 @@ $loong-checkbox-spacing-item: $loong-spacing-base !default;
 .checkbox_item {
   display: flex;
   align-items: center;
-  margin-left: 16rpx;
+  // margin-left: 16rpx;
 }
 
 .checkbox_item_main {
