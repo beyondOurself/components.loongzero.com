@@ -42,7 +42,7 @@ const change = (value = [], options = []) => {
 		<view class="">多选框</view>
 		<loong-checkbox :options="options" v-model="modelArr" @change="change"></loong-checkbox>
 		<view class="">单选框</view>
-		<loong-checkbox :options="options2" v-model="modelVal" @change="change"></loong-checkbox>
+		<loong-checkbox  spacing='60' :options="options2" v-model="modelVal" @change="change"></loong-checkbox>
 		<!-- <loong-radio :options="options"></loong-radio> -->
 	</view>
 </template>
