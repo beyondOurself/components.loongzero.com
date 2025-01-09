@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch, computed, watchEffect, onMounted, onUnmounted, toValue } from 'vue';
-
+import LoongClassifyFilter from './loong-classify-filter.vue'
 defineOptions({
 	name: 'LoongClassify'
 });
@@ -79,32 +79,36 @@ const selectClasses = (item = {}, index = 0) => {
 		<!-- S 左侧分类区域 -->
 		<view class="classes_items">
 			<template v-for="(item, index) in options">
-				<view class="classes_item" :style="getRadiusStyle(index)" :class="{ 'classes_item--actived': selectedIndex === index }"  @click="selectClasses(item, index)">
+				<view class="classes_item" :style="getRadiusStyle(index)" :class="{ 'classes_item--actived': selectedIndex === index }" @click="selectClasses(item, index)">
 					<view class="classes_item_line" v-show="selectedIndex === index"></view>
 					<text class="classes_item_label" :class="{ 'classes_item_label--actived': selectedIndex === index }" @click="selectClasses(item, index)">{{ item.label }}</text>
 				</view>
 			</template>
-			
-			<view class="classes_item_fill">
-				
-			</view>
+
+			<view class="classes_item_fill"></view>
 		</view>
 		<!-- E 左侧分类区域 -->
 
 		<!-- S 内容列表 -->
 		<!-- E 内容列表 -->
-		<view class="classify_content"></view>
+		<view class="classify_content">
+			<!-- S 品牌 -->
+			<loong-classify-filter> </loong-classify-filter>
+			<!-- E 品牌 -->
+		</view>
 	</view>
 </template>
 
 <style lang="scss" scoped>
 @import '~@/uni_modules/loong-scss/index.scss';
 $loong-classify-color: $loong-primary !default;
+$loong-classify-bgcolor: #f2f2f2 !default;
 
 .loong-classify {
 	@include base-component;
 	height: 100%;
 	background-color: #fff;
+	display: flex;
 }
 .classes_items {
 	height: 100%;
@@ -112,14 +116,14 @@ $loong-classify-color: $loong-primary !default;
 	background-color: #fff;
 	display: flex;
 	flex-direction: column;
-
+	overflow-y: auto;
 }
 .classes_item {
 	height: 95rpx;
 	display: flex;
 	align-items: center;
 	position: relative;
-	background-color: #f2f2f2;
+	background-color: $loong-classify-bgcolor;
 }
 .classes_item_label {
 	margin-left: 23rpx;
@@ -140,6 +144,12 @@ $loong-classify-color: $loong-primary !default;
 }
 .classes_item_fill {
 	flex: 1;
-	background-color: #f2f2f2;
+	background-color: $loong-classify-bgcolor;
 }
+
+.classify_content {
+	flex: 1;
+	height: 100%;
+}
+
 </style>
