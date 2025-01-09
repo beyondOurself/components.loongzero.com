@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-23 11:35:35
  * @LastEditors: canlong.shen 
- * @LastEditTime: 2024-09-18 11:19:49
+ * @LastEditTime: 2025-01-09 18:00:15
  * @FilePath: /components.loongzero.com/uni_modules/loong-checkbox/components/loong-checkbox/loong-checkbox.vue
 -->
 
@@ -106,7 +106,7 @@ const mainGet = computed(() => {
 		<checkbox-group @change="change">
 			<view class="checkbox_container">
 				<template v-for="item in groupOptions">
-					<view class="checkbox_item">
+					<view class="checkbox_item" >
 						<label
 							class="checkbox_item_main"
 							:class="[
@@ -152,7 +152,8 @@ $loong-checkbox-spacing-item: $loong-spacing-base !default;
 .checkbox_item {
 	display: flex;
 	align-items: center;
-	// margin-left: 16rpx;
+	 margin-left: 8rpx;
+	 margin-bottom: 8rpx;
 }
 
 .checkbox_item_main {
@@ -196,6 +197,7 @@ $loong-checkbox-spacing-item: $loong-spacing-base !default;
 .checkbox_container {
 	display: flex;
 	align-items: center;
+	flex-wrap: wrap;
 }
 .checkbox_item_text {
 	margin-left: $loong-checkbox-spacing-text;
