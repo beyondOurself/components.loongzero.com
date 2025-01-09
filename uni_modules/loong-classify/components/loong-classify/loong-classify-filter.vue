@@ -15,22 +15,22 @@ const props = defineProps({
 				tags: [
 					{
 						label: '品牌1',
-						value: 'brand',
+						value: 'brand1',
 						image: 'https://env-00jxha7c81fs.normal.cloudstatic.cn/happy/search/classify/demo/%E4%B8%8B%E8%BD%BD%20%281%29.png'
 					},
 					{
 						label: '品牌2',
-						value: 'brand',
+						value: 'brand2',
 						image: 'https://env-00jxha7c81fs.normal.cloudstatic.cn/happy/search/classify/demo/%E4%B8%8B%E8%BD%BD%20%282%29.png'
 					},
 					{
 						label: '品牌3',
-						value: 'brand',
+						value: 'brand3',
 						image: 'https://env-00jxha7c81fs.normal.cloudstatic.cn/happy/search/classify/demo/%E4%B8%8B%E8%BD%BD%20%283%29.png'
 					},
 					{
 						label: '品牌4',
-						value: 'brand',
+						value: 'brand4',
 						image: 'https://env-00jxha7c81fs.normal.cloudstatic.cn/happy/search/classify/demo/%E4%B8%8B%E8%BD%BD%20%283%29.png'
 					}
 				]
@@ -80,7 +80,10 @@ const props = defineProps({
 					{
 						label: '小码',
 						value: 'S'
-					}
+					},{
+						label: '超小码',
+						value: 'XS'
+					},
 				]
 			}
 		]
@@ -108,7 +111,7 @@ watchEffect(() => {
 
 // ---> S 打开选择过滤器 <---
 
-const isOpenPopup = ref(false);
+const isOpenPopup = ref(true);
 const switchFilters = () => {
 	isOpenPopup.value = !isOpenPopup.value;
 };
@@ -136,8 +139,19 @@ const switchFilters = () => {
 			</view>
 		</view>
 		<!-- S 选择条件弹窗 -->
-         <view class="filter_popup_mask" v-if="isOpenPopup" @click="switchFilters"></view>
-		<view class="filter_popup" :class="{ 'filter_popup--actived': isOpenPopup }"></view>
+		<view class="filter_popup_mask" v-if="isOpenPopup" @click="switchFilters"></view>
+		<view class="filter_popup" :class="{ 'filter_popup--actived': isOpenPopup }">
+			<view class="filter_items">
+				<view class="filter_item"  v-for="(item,index) in options">
+					<view class="filter_item_title">
+						<text>{{item.title}}</text>
+					</view>
+					<view class="filter_item_multiple">
+					<loong-checkbox spacing='28' :options="item.tags" ></loong-checkbox>
+					</view>
+				</view>
+			</view>
+		</view>
 		<!-- E 选择条件弹窗 -->
 	</view>
 </template>
@@ -170,6 +184,11 @@ const switchFilters = () => {
 	font-size: 20rpx;
 	color: #6b6b6b;
 }
+.brand_item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
 .filter_popup_mask {
 	position: fixed;
 	left: 0;
@@ -181,15 +200,29 @@ const switchFilters = () => {
 .filter_popup {
 	position: fixed;
 	height: 100%;
-	width: 50%;
-	background-color: red;
+	width: 600rpx;
+	background-color: #fff;
 	z-index: 2;
 	top: 0;
-	right: -400rpx;
+	right: -600rpx;
 	transition: right 0.3s ease; /* 动画效果 */
 }
 
 .filter_popup--actived {
 	right: 0;
+}
+.filter_items {
+	margin: 20rpx;
+}
+.filter_item {
+	margin-bottom: 16rpx;
+}
+.filter_item_title {
+	font-weight: bold;
+	font-size: 32rpx;
+	margin-bottom: 16rpx;
+}
+.filter_item_multiple {
+	margin-left: 10rpx;
 }
 </style>
