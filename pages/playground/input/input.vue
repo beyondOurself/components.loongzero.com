@@ -8,7 +8,7 @@ const props = defineProps({});
 </script>
 <template>
 	<view class="input-demo">
-		<loong-input></loong-input>
+		<loong-input placeholderStyle="color:#F76260"></loong-input>
 	</view>
 </template>
 <style lang="scss">
