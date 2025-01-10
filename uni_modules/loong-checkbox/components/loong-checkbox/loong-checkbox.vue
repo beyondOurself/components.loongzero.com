@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-23 11:35:35
  * @LastEditors: canlong.shen 
- * @LastEditTime: 2025-01-10 11:00:48
+ * @LastEditTime: 2025-01-10 11:13:46
  * @FilePath: /components.loongzero.com/uni_modules/loong-checkbox/components/loong-checkbox/loong-checkbox.vue
 -->
 
@@ -64,6 +64,10 @@ watchEffect(() => {
 
 // ---> S 切换选择 <---
 
+const cloneObject = (oriObject = {}) => {
+	return  JSON.parse(JSON.stringify(oriObject))
+}
+
 const change = (event = {}) => {
 	const {
 		detail: { value:oriValue = [] }
@@ -75,11 +79,11 @@ const change = (event = {}) => {
 	if (toValue(singleRef)) {
 		const singleSelectedValue = value && value.length ? activedValue : inactivedValue;
 		modelValue.value = singleSelectedValue;
-		emits('change', singleSelectedValue, singleOption);
+		emits('change', cloneObject(singleSelectedValue), cloneObject(singleOption));
 	} else {
 		modelValue.value = value;
 		const findOptionList = groupOptionsList.filter((fi) => value.includes(fi.value || fi));
-		emits('change', findOptionList);
+		emits('change', cloneObject(findOptionList));
 	}
 };
 const isActived = (value = '') => {
