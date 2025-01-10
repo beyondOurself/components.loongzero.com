@@ -3,7 +3,7 @@
  * @Author: canlong.shen 
  * @Date: 2024-08-23 11:35:35
  * @LastEditors: canlong.shen 
- * @LastEditTime: 2025-01-09 18:04:20
+ * @LastEditTime: 2025-01-10 11:00:48
  * @FilePath: /components.loongzero.com/uni_modules/loong-checkbox/components/loong-checkbox/loong-checkbox.vue
 -->
 
@@ -66,8 +66,10 @@ watchEffect(() => {
 
 const change = (event = {}) => {
 	const {
-		detail: { value = [] }
+		detail: { value:oriValue = [] }
 	} = event;
+	
+	const value = oriValue.map( mi => `${mi}`)
 
 	const groupOptionsList = toValue(groupOptions);
 	if (toValue(singleRef)) {
@@ -76,12 +78,16 @@ const change = (event = {}) => {
 		emits('change', singleSelectedValue, singleOption);
 	} else {
 		modelValue.value = value;
-		const findOptionList = groupOptionsList.filter((fi) => value.includes(fi));
+		const findOptionList = groupOptionsList.filter((fi) => value.includes(fi.value || fi));
 		emits('change', findOptionList);
 	}
 };
 const isActived = (value = '') => {
-	return toValue(singleRef) ? `${toValue(modelValue)}` === value : (toValue(modelValue) || []).includes(`${value}`);
+	
+	 const result =  toValue(singleRef) ? `${toValue(modelValue)}` === `${value}` : (toValue(modelValue) || []).includes(`${value}`);
+	
+	
+	return toValue(singleRef) ? `${toValue(modelValue)}` === `${value}` : (toValue(modelValue) || []).includes(`${value}`);
 };
 // ---> E 切换选择 <---
 

@@ -16,7 +16,7 @@ const options = ref([
 	},
 	{
 		label: 'label',
-		value: '2'
+		value: 2
 	},
 	{
 		label: 'label',
@@ -61,8 +61,8 @@ const change = (value = [], options = []) => {
 		<view class="" style="width: 500rpx;">
 			<loong-checkbox :options="options" v-model="modelArr" @change="change"></loong-checkbox>
 		</view>
-		<view class="">单选框</view>
-		<loong-checkbox  spacing='60' :options="options2" v-model="modelVal" @change="change"></loong-checkbox>
+		<!-- <view class="">单选框</view>
+		<loong-checkbox  spacing='60' :options="options2" v-model="modelVal" @change="change"></loong-checkbox> -->
 		<!-- <loong-radio :options="options"></loong-radio> -->
 	</view>
 </template>
