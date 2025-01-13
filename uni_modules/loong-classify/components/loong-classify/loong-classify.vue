@@ -1,46 +1,36 @@
 <script setup>
 import { ref, watch, computed, watchEffect, onMounted, onUnmounted, toValue } from 'vue';
-import LoongClassifyFilter from './loong-classify-filter.vue'
+import LoongClassifyFilter from './loong-classify-filter.vue';
 defineOptions({
 	name: 'LoongClassify'
 });
+
 const props = defineProps({
 	options: {
 		type: [Array],
-		default: () => [
-			{
-				label: '全部商品',
-				value: '1'
-			},
-			{
-				label: '分类1',
-				value: '1'
-			},
-			{
-				label: '分类2',
-				value: '2'
-			},
-			{
-				label: '分类3',
-				value: '3'
-			},
-			{
-				label: '分类4',
-				value: '4'
-			},
-			{
-				label: '分类5',
-				value: '5'
-			},
-			{
-				label: '分类6',
-				value: '6'
-			}
-		]
+		default: () => {
+			return {
+				
+			};
+		}
 	}
 });
 
+const emits = defineEmits(['change']);
+const cloneObject = (oriObject = {}) => {
+	return JSON.parse(JSON.stringify(oriObject));
+};
+
 // ---> S 选择分类 <---
+
+const classifyList = ref([]);
+const filterList = ref([])
+
+watchEffect(() => {
+	const { options: { classifies = [] ,filters = []} = {} } = props || {};
+	classifyList.value = classifies || [];
+	filterList.value = filters || [];
+});
 
 const selectedIndex = ref(0);
 
@@ -49,9 +39,9 @@ const getRadiusStyle = (itemIndex = 0) => {
 
 	const preIndex = selectedIndexVal - 1;
 	const nextIndex = selectedIndexVal + 1;
-	const maxIndex = props.options.length;
+	const maxIndex = classifyList.value.length;
 
-	if (preIndex > 0 && preIndex === itemIndex) {
+	if (preIndex >= 0 && preIndex === itemIndex) {
 		return {
 			'border-bottom-right-radius': '16rpx'
 		};
@@ -66,22 +56,42 @@ const getRadiusStyle = (itemIndex = 0) => {
 	return {};
 };
 
+// ---> E 选择分类 <---
+
+// ---> S 返回数据 <---
+
+const selectedFilterData = {
+	classification: {},
+	tags: []
+};
+
 const selectClasses = (item = {}, index = 0) => {
 	const { label = '', value = '' } = item || {};
 
 	selectedIndex.value = index;
+	selectedFilterData.classification = item;
+	returnResult();
+};
+const selectedTasData = [];
+const changeTags = (tags = []) => {
+	selectedFilterData.tags = tags;
+	returnResult();
 };
 
-// ---> E 选择分类 <---
+const returnResult = () => {
+	console.log('selectedFilterData', selectedFilterData);
+	emits('change', cloneObject(selectedFilterData));
+};
+// ---> E 返回数据 <---
 </script>
 <template>
 	<view class="loong-classify">
 		<!-- S 左侧分类区域 -->
 		<view class="classes_items">
-			<template v-for="(item, index) in options">
+			<template v-for="(item, index) in classifyList">
 				<view class="classes_item" :style="getRadiusStyle(index)" :class="{ 'classes_item--actived': selectedIndex === index }" @click="selectClasses(item, index)">
 					<view class="classes_item_line" v-show="selectedIndex === index"></view>
-					<text class="classes_item_label" :class="{ 'classes_item_label--actived': selectedIndex === index }" @click="selectClasses(item, index)">{{ item.label }}</text>
+					<text class="classes_item_label" :class="{ 'classes_item_label--actived': selectedIndex === index }">{{ item.label }}</text>
 				</view>
 			</template>
 
@@ -93,7 +103,7 @@ const selectClasses = (item = {}, index = 0) => {
 		<!-- E 内容列表 -->
 		<view class="classify_content">
 			<!-- S 品牌 -->
-			<loong-classify-filter> </loong-classify-filter>
+			<loong-classify-filter :options="filterList"  @change="changeTags"></loong-classify-filter>
 			<!-- E 品牌 -->
 		</view>
 	</view>
@@ -151,5 +161,4 @@ $loong-classify-bgcolor: #f2f2f2 !default;
 	flex: 1;
 	height: 100%;
 }
-
 </style>

@@ -8,87 +8,11 @@ defineOptions({
 const props = defineProps({
 	options: {
 		type: [Array],
-		default: () => [
-			{
-				title: '品牌',
-				hot: true,
-				tags: [
-					{
-						label: '品牌1',
-						value: 'brand1',
-						image: 'https://env-00jxha7c81fs.normal.cloudstatic.cn/happy/search/classify/demo/%E4%B8%8B%E8%BD%BD%20%281%29.png'
-					},
-					{
-						label: '品牌2',
-						value: 'brand2',
-						image: 'https://env-00jxha7c81fs.normal.cloudstatic.cn/happy/search/classify/demo/%E4%B8%8B%E8%BD%BD%20%282%29.png'
-					},
-					{
-						label: '品牌3',
-						value: 'brand3',
-						image: 'https://env-00jxha7c81fs.normal.cloudstatic.cn/happy/search/classify/demo/%E4%B8%8B%E8%BD%BD%20%283%29.png'
-					},
-					{
-						label: '品牌4',
-						value: 'brand4',
-						image: 'https://env-00jxha7c81fs.normal.cloudstatic.cn/happy/search/classify/demo/%E4%B8%8B%E8%BD%BD%20%283%29.png'
-					}
-				]
-			},
-			{
-				title: '颜色',
-				multiple: true,
-				tags: [
-					{
-						label: '红色',
-						value: 'red'
-					},
-					{
-						label: '黄色',
-						value: 'yellow'
-					},
-					{
-						label: '蓝色',
-						value: 'blue'
-					},
-					{
-						label: '绿色',
-						value: 'green'
-					}
-				]
-			},
-			{
-				title: '尺寸',
-				multiple: true,
-				tags: [
-					{
-						label: '特大码',
-						value: 'XXL '
-					},
-					{
-						label: '加大码',
-						value: 'XL'
-					},
-					{
-						label: '大码',
-						value: 'L'
-					},
-					{
-						label: '中码',
-						value: 'M'
-					},
-					{
-						label: '小码',
-						value: 'S'
-					},{
-						label: '超小码',
-						value: 'XS'
-					},
-				]
-			}
-		]
+		default: () => []
 	}
 });
+
+const emits = defineEmits(['change']);
 
 const trimBrandText = (label = '') => {
 	return label && label.length > 4 ? `${label.substring(0, 3)}..` : label;
@@ -100,34 +24,71 @@ const hotList = ref([]);
 
 watchEffect(() => {
 	const options = props.options;
-	const findHot = options.find((fi) => fi.hot);
-	console.log('findHotList', findHot);
-	if (findHot && findHot.tags) {
-		hotList.value = findHot.tags.slice(0, 4);
-	}
+	options.forEach((fei) => {
+		if (fei.tags) {
+			const hotTagList = fei.tags.filter((fli) => fli.hot);
+			hotList.value.push(...hotTagList);
+		}
+	});
 });
 
 // ---> E 热门搜索 <---
 
 // ---> S 打开选择过滤器 <---
 
-const isOpenPopup = ref(true);
+const isOpenPopup = ref(false);
 const switchFilters = () => {
 	isOpenPopup.value = !isOpenPopup.value;
+
+	if (!isOpenPopup.value) {
+		emits('change', cloneObject(selectedTagsData));
+	}
 };
 
 // ---> E 打开选择过滤器 <---
+
+// ---> S 选择数据 <---
+const cloneObject = (oriObject = {}) => {
+	return JSON.parse(JSON.stringify(oriObject));
+};
+let selectedTagsData = [];
+const tagItemList = [];
+const changeTags = (tags = [], index = 0) => {
+	tagItemList[index] = tags;
+	selectedTagsData = tagItemList.flat();
+	selectedBrandValue.value = '';
+};
+
+const selectedBrandValue = ref('');
+
+const handleBrand = (brand = {}) => {
+	let tempTagList = [...selectedTagsData]
+	
+    const brandValue = brand.value || ''
+	
+	
+	if(selectedBrandValue.value !== brandValue){
+		selectedBrandValue.value = brandValue ;
+		if (!selectedTagsData.find((fi) => fi.value === brandValue)) {
+			tempTagList.push(brand);
+		}
+	}else{
+		 selectedBrandValue.value  = ''
+	}
+	
+	
+	emits('change', cloneObject(tempTagList));
+};
+
+// ---> E 选择数据 <---
 </script>
 <template>
 	<view class="loong-classify-filter">
 		<view class="filter_brand_wrap">
 			<view class="filter_brand_items">
 				<template v-for="(item, index) in hotList">
-					<view class="brand_item">
-						<view class="brand_item_cover">
-							<image v-if="item.image" mode="scaleToFill" style="width: 100%; height: 100%" :src="item.image" alt="" srcset="" />
-						</view>
-						<view class="brand_item_text">
+					<view class="brand_item" :class="{ 'brand_item--actived': selectedBrandValue === item.value }" @click="handleBrand(item)">
+						<view class="brand_item_text" :class="{ 'brand_item_text--actived': selectedBrandValue === item.value }">
 							<text>{{ trimBrandText(item.label) }}</text>
 						</view>
 					</view>
@@ -142,12 +103,12 @@ const switchFilters = () => {
 		<view class="filter_popup_mask" v-if="isOpenPopup" @click="switchFilters"></view>
 		<view class="filter_popup" :class="{ 'filter_popup--actived': isOpenPopup }">
 			<view class="filter_items">
-				<view class="filter_item"  v-for="(item,index) in options">
+				<view class="filter_item" v-for="(item, index) in options">
 					<view class="filter_item_title">
-						<text>{{item.title}}</text>
+						<text>{{ item.title }}</text>
 					</view>
 					<view class="filter_item_multiple">
-					<loong-checkbox spacing='28' :options="item.tags" ></loong-checkbox>
+						<loong-checkbox spacing="28" :options="item.tags" @change="changeTags($event, index)"></loong-checkbox>
 					</view>
 				</view>
 			</view>
@@ -158,13 +119,13 @@ const switchFilters = () => {
 
 <style lang="scss" scoped>
 @import '~@/uni_modules/loong-scss/index.scss';
-
+$loong-classify-brand-color: $loong-primary !default;
 .loong-classify {
 	@include base-component;
 }
 .filter_brand_wrap {
 	display: flex;
-	height: 160rpx;
+	height: 80rpx;
 	padding: 0 16rpx;
 	display: flex;
 	align-items: center;
@@ -172,7 +133,7 @@ const switchFilters = () => {
 .filter_brand_items {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: space-around;
 	flex: 1;
 }
 .brand_item_cover {
@@ -188,6 +149,11 @@ const switchFilters = () => {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	background-color:rgb(243.9, 244.2, 244.8);
+	border:solid 2rpx rgb(232.8, 233.4, 234.6);
+	padding: 4rpx;
+	border-radius: 8rpx;
+    
 }
 .filter_popup_mask {
 	position: fixed;
@@ -224,5 +190,15 @@ const switchFilters = () => {
 }
 .filter_item_multiple {
 	margin-left: 10rpx;
+}
+
+.brand_item_text--actived {
+	color:  $loong-classify-brand-color;
+	
+}
+
+.brand_item--actived {
+	background-color:  transparentize($loong-classify-brand-color, 0.9); 
+	border:  solid 1px  transparentize($loong-classify-brand-color, 0.8);
 }
 </style>
