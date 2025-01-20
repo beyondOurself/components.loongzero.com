@@ -102,9 +102,12 @@ const returnResult = () => {
 		<!-- S 内容列表 -->
 		<!-- E 内容列表 -->
 		<view class="classify_content">
-			<!-- S 品牌 -->
+			<!-- S 过滤条件 -->
 			<loong-classify-filter :options="filterList"  @change="changeTags"></loong-classify-filter>
-			<!-- E 品牌 -->
+			<!-- E 过滤条件 -->
+			<view class="content_goods">
+				<template v-slot="good"></template>
+			</view>
 		</view>
 	</view>
 </template>
