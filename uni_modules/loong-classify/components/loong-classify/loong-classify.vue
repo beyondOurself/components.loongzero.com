@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, computed, watchEffect, onMounted, onUnmounted, toValue } from 'vue';
+import { getCurrentInstance, ref, watch, computed, watchEffect, onMounted, onUnmounted, toValue, nextTick } from 'vue';
 import LoongClassifyFilter from './loong-classify-filter.vue';
 defineOptions({
 	name: 'LoongClassify'
@@ -7,10 +7,14 @@ defineOptions({
 
 const props = defineProps({
 	options: {
-		type: [Array],
+		type: [Array,Object],
 		default: () => {
 			return {};
 		}
+	},
+	height: {
+		type: [String],
+		default: ''
 	}
 });
 
@@ -85,6 +89,40 @@ const returnResult = () => {
 const scrolltolower = () => {
 	emits('tolower');
 };
+
+
+const CONTENT_GOODS_WRAP_REF = ref(null);
+
+const scrollHeight = ref(0);
+
+const setScrollHeight = () => {
+	const instance = getCurrentInstance();
+
+	const query = uni.createSelectorQuery().in(instance.proxy);
+	query
+		.select('#CONTENT_GOODS_WRAP_ID')
+		.boundingClientRect((data) => {
+			const { height = 0 } = data || {};
+			scrollHeight.value = height;
+			console.log('节点离页面顶部的距离为' + height);
+		})
+		.exec();
+};
+
+onMounted(() => {
+	setScrollHeight();
+});
+
+const scrollStyleGet = computed(() => {
+	const styler = {};
+	const scrollHeightVal = scrollHeight.value;
+
+	if (scrollHeightVal) {
+		styler.height = `${scrollHeightVal}px`;
+	}
+
+	return styler;
+});
 </script>
 <template>
 	<view class="loong-classify">
@@ -105,13 +143,15 @@ const scrolltolower = () => {
 		<!-- E 内容列表 -->
 		<view class="classify_content">
 			<!-- S 过滤条件 -->
-			<loong-classify-filter :options="filterList" @change="changeTags"></loong-classify-filter>
+			<loong-classify-filter class="classify_content_filter" :options="filterList" @change="changeTags"></loong-classify-filter>
 			<!-- E 过滤条件 -->
-			<scroll-view style="height: 100%" class="content_goods" scroll-y @scrolltolower="scrolltolower">
-				<view class="content_goods">
-					<slot></slot>
-				</view>
-			</scroll-view>
+			<view class="content_goods_wrap" id="CONTENT_GOODS_WRAP_ID">
+				<scroll-view class="content_goods_scroll" scroll-y :style="scrollStyleGet" @scrolltolower="scrolltolower">
+					<view class="content_goods">
+						<slot></slot>
+					</view>
+				</scroll-view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -167,14 +207,21 @@ $loong-classify-bgcolor: #f2f2f2 !default;
 .classify_content {
 	flex: 1;
 	height: 100%;
+	display: flex;
+	flex-direction: column;
 }
 
-.content_goods_wrap {
-	background-color: green;
-	height: 100%;
+.classify_content_filter {
 }
+
 .content_goods {
-	background-color: green;
-	padding-bottom: 100rpx;
+	padding-bottom: 20rpx;
+}
+.content_goods_wrap {
+	flex: 1;
+}
+
+.content_goods_scroll {
+	height: 100%;
 }
 </style>

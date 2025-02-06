@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref ,nextTick} from 'vue';
  
   
  const props = defineProps({
@@ -120,13 +120,20 @@ import { ref } from 'vue';
 					}
 				]})
   
+  
+let sort = ref(0)
+ 
+ setTimeout(() => {
+	 sort.value = 20
+ },2000)
+  
+  
 </script>
 <template>
   <view class="demo-classify">
 
     <loong-classify :options="options">
-		
-		<view v-for="i in 20" class="good">{{i}}</view>
+		<view v-for="i in sort" class="good">{{i}}</view>
 	</loong-classify>
   </view>
 </template>
