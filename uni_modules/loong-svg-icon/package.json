@@ -1,10 +1,10 @@
 {
-  "id": "loong-input",
-  "displayName": " loong-input vue3 数据驱动文本输入组件(纯粹支持小程序)",
-  "version": "1.0.3",
-  "description": "受不了官方组件库的大杂烩,vue3 重写只支持小程序、H5、",
+  "id": "loong-svg-icon",
+  "displayName": "loong-svg-icon",
+  "version": "1.0.0",
+  "description": "loong-svg-icon",
   "keywords": [
-    "loong-input"
+    "loong-svg-icon"
 ],
   "repository": "",
   "engines": {
@@ -24,17 +24,14 @@
       "qq": ""
     },
     "declaration": {
-      "ads": "无",
-      "data": "插件不采集任何数据",
-      "permissions": "无"
+      "ads": "“无”",
+      "data": "“无”",
+      "permissions": "“无”"
     },
     "npmurl": ""
   },
   "uni_modules": {
-    "dependencies": [
-      "loong-scss"
-
-    ],
+    "dependencies": [],
     "encrypt": [],
     "platforms": {
       "cloud": {
@@ -45,7 +42,7 @@
       "client": {
         "Vue": {
           "vue2": "u",
-          "vue3": "y"
+          "vue3": "u"
         },
         "App": {
           "app-vue": "u",

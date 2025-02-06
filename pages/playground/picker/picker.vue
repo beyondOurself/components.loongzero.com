@@ -46,6 +46,7 @@ const bindSingleValue = ref("");
 // ---> E 单项选择 <---
 
 // ---> S 多项选择 <---
+
 const bindValueMultiple = shallowRef([1111, 2222]);
 const multipleOptions = shallowRef([
   [{ value: 1111, label: "111" }, 2, 3, 4, 5],
@@ -58,7 +59,7 @@ const multipleOptions = shallowRef([
     <!-- <button @click="open">多项点击显示</button> -->
     <!-- {{ inputValueGet }} -->
     <!-- 绑定值： {{ bindValue }} -->
-    <loong-picker
+<!--    <loong-picker
       ref="PICKER_REF"
       v-model="bindValueMultiple"
       title="多值选择"
@@ -68,7 +69,7 @@ const multipleOptions = shallowRef([
       <template #item="{ data, index }">
         <view>数据项: {{ data.label }}</view>
       </template>
-    </loong-picker>
+    </loong-picker> -->
 
     <!-- <button @click="openSingle">点击显示单项选择</button>
     绑定值： {{ bindSingleValue }}
@@ -80,6 +81,12 @@ const multipleOptions = shallowRef([
       @change="changeValue"
     >
     </loong-picker> -->
+	
+	 <view class="">
+	 	版本V2
+		<loong-picker-v2  v-model="bindValueMultiple" :options="multipleOptions"></loong-picker-v2>
+	 </view>
+	
   </view>
 </template>
 <style lang="scss">

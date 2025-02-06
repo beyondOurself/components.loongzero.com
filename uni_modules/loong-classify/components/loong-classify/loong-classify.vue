@@ -9,14 +9,12 @@ const props = defineProps({
 	options: {
 		type: [Array],
 		default: () => {
-			return {
-				
-			};
+			return {};
 		}
 	}
 });
 
-const emits = defineEmits(['change']);
+const emits = defineEmits(['change', 'tolower']);
 const cloneObject = (oriObject = {}) => {
 	return JSON.parse(JSON.stringify(oriObject));
 };
@@ -24,10 +22,10 @@ const cloneObject = (oriObject = {}) => {
 // ---> S 选择分类 <---
 
 const classifyList = ref([]);
-const filterList = ref([])
+const filterList = ref([]);
 
 watchEffect(() => {
-	const { options: { classifies = [] ,filters = []} = {} } = props || {};
+	const { options: { classifies = [], filters = [] } = {} } = props || {};
 	classifyList.value = classifies || [];
 	filterList.value = filters || [];
 });
@@ -83,6 +81,10 @@ const returnResult = () => {
 	emits('change', cloneObject(selectedFilterData));
 };
 // ---> E 返回数据 <---
+
+const scrolltolower = () => {
+	emits('tolower');
+};
 </script>
 <template>
 	<view class="loong-classify">
@@ -103,11 +105,13 @@ const returnResult = () => {
 		<!-- E 内容列表 -->
 		<view class="classify_content">
 			<!-- S 过滤条件 -->
-			<loong-classify-filter :options="filterList"  @change="changeTags"></loong-classify-filter>
+			<loong-classify-filter :options="filterList" @change="changeTags"></loong-classify-filter>
 			<!-- E 过滤条件 -->
-			<view class="content_goods">
-				<template v-slot="good"></template>
-			</view>
+			<scroll-view style="height: 100%" class="content_goods" scroll-y @scrolltolower="scrolltolower">
+				<view class="content_goods">
+					<slot></slot>
+				</view>
+			</scroll-view>
 		</view>
 	</view>
 </template>
@@ -163,5 +167,14 @@ $loong-classify-bgcolor: #f2f2f2 !default;
 .classify_content {
 	flex: 1;
 	height: 100%;
+}
+
+.content_goods_wrap {
+	background-color: green;
+	height: 100%;
+}
+.content_goods {
+	background-color: green;
+	padding-bottom: 100rpx;
 }
 </style>

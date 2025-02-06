@@ -126,7 +126,7 @@ import { ref } from 'vue';
 
     <loong-classify :options="options">
 		
-	
+		<view v-for="i in 20" class="good">{{i}}</view>
 	</loong-classify>
   </view>
 </template>
@@ -138,6 +138,13 @@ import { ref } from 'vue';
 		right: 0;
 		top: 0;
 		bottom: 0;
+	}
+	
+	.good {
+		width: 100%;
+		height: 100rpx;
+		background-color: red;
+		margin-bottom: 16rpx;
 	}
 </style>
 <style lang="scss">

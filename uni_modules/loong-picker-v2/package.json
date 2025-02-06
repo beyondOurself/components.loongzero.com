@@ -1,10 +1,10 @@
 {
-  "id": "loong-input",
-  "displayName": " loong-input vue3 数据驱动文本输入组件(纯粹支持小程序)",
-  "version": "1.0.3",
-  "description": "受不了官方组件库的大杂烩,vue3 重写只支持小程序、H5、",
+  "id": "loong-picker-v2",
+  "displayName": "loong-picker-v2",
+  "version": "1.0.0",
+  "description": "loong-picker-v2",
   "keywords": [
-    "loong-input"
+    "loong-picker-v2"
 ],
   "repository": "",
   "engines": {
@@ -24,28 +24,25 @@
       "qq": ""
     },
     "declaration": {
-      "ads": "无",
-      "data": "插件不采集任何数据",
-      "permissions": "无"
+      "ads": "",
+      "data": "",
+      "permissions": ""
     },
     "npmurl": ""
   },
   "uni_modules": {
-    "dependencies": [
-      "loong-scss"
-
-    ],
+    "dependencies": [],
     "encrypt": [],
     "platforms": {
       "cloud": {
-        "tcb": "y",
-        "aliyun": "y",
-        "alipay": "y"
+        "tcb": "u",
+        "aliyun": "u",
+        "alipay": "u"
       },
       "client": {
         "Vue": {
           "vue2": "u",
-          "vue3": "y"
+          "vue3": "u"
         },
         "App": {
           "app-vue": "u",

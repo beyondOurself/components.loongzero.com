@@ -16,6 +16,10 @@ const props = defineProps({
 	placeholderStyle: {
 		type: String,
 		default: ''
+	},
+	height: {
+		type: [String],
+		default: ''
 	}
 });
 
@@ -37,11 +41,29 @@ const inputClass = computed(() => {
 const placeholderGet = computed(() => {
 	return props.placeholder || '请输入';
 });
+
 // ---> E placeholder <---
+
+const inputStyleGet = computed(() => {
+	const style = {};
+	const { height = '' } = props;
+	if (height) {
+		style.height = `${height}rpx`;
+	}
+	return style;
+});
 </script>
 <template>
 	<view class="loong-input">
-		<input v-model="inputValue" class="input_body" name="input" :placeholder="placeholderGet" :class="inputClass" :placeholder-style="placeholderStyle" />
+		<input
+			:style="inputStyleGet"
+			v-model="inputValue"
+			class="input_body"
+			name="input"
+			:placeholder="placeholderGet"
+			:class="inputClass"
+			:placeholder-style="placeholderStyle"
+		/>
 	</view>
 </template>
 <style lang="scss" scoped>
